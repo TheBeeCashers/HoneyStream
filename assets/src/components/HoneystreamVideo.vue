@@ -50,6 +50,7 @@ export default {
       videoId: 'videos/low.webm',
       currentTime: 0,
       previewEnded: false,
+      purchased: false,
     };
   },
   mounted() {
@@ -58,9 +59,7 @@ export default {
   },
   methods: {
     onPlay(event) {
-      console.log("hey")
-      if (this.previewEnded) {
-        console.log("hey1")
+      if (this.previewEnded && !purchased) {
         event.preventDefault();
       }
     },
@@ -72,10 +71,11 @@ export default {
       }
     },
     handlePayment() {
-      console.log('payment');
+      this.purchased = true;
+      
       this.$refs.player.pause();
       const currTime = this.$refs.player.currentTime;
-      console.log(currTime);
+      
       this.videoId = 'videos/high.webm';
       this.$refs.player.load();
       this.$refs.player.currentTime = currTime;
@@ -103,10 +103,23 @@ a {
 }
 
 .video-container {
+  width: 800px;
+  height: 600px;
   position: relative;
+
+  .paywall {
+    position: absolute;
+    background-color: rgba(200, 232, 10, 0.8);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
-.paywall {
-  position: absolute;
-}
 </style>
