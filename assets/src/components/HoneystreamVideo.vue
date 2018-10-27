@@ -1,11 +1,12 @@
 <template>
   <div id="video">
+    <h1>{{ msg }}</h1>
+
     <div class="video-wrapper">
-      <h1>{{ msg }}</h1>
       <div class="video-container">
         <video 
-          width="800" 
-          height="600" 
+          width="600" 
+          height="400" 
           :controls="!previewEnded || purchased" 
           ref="player" 
           id="video"
@@ -14,7 +15,7 @@
           Your browser does not support the video tag.
         </video>
         <video
-          width="800" 
+          width="400" 
           height="600" 
           :controls="!previewEnded || purchased" 
           ref="player2" 
@@ -36,9 +37,26 @@
           />
         </div>      
       </div>
+
+      <div class="video-sidebar">
+        <div>
+          <h3>Uploaded by</h3>
+
+          <div class="uploader">
+            <div class="uploader-photo" />
+            <a href="#">Honey Streamer</a>
+          </div>
+
+          <ul>
+            <li>Preview duration: {{previewDuration}}</li>
+            <li>Current time {{currentTime}}</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="video-sidebar">
-      <VideoSidebar :videos="videos" />
+
+    <div id="video-related">
+      <VideoSidebar v-bind:videos="videos" />
     </div>
   </div>
 </template>
@@ -119,42 +137,59 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 #video {
-  display: flex;
   padding: 20px;
 
   h1 {
     margin: 0 0 10px;
     padding: 0;
-
   }
 
   .video-wrapper {
-    flex: 1;
-  }
-
-  .video-sidebar {
-    width: 300px;
-    background: silver;
-  }
-}
-
-.video-container {
-  width: 600px;
-  height: 400px;
-  position: relative;
-
-  .paywall {
-    position: absolute;
-    background-color: rgba(55, 56, 48, 0.8);
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
+
+    .video-container {
+      width: 600px;
+      height: 400px;
+      position: relative;
+
+      .paywall {
+        position: absolute;
+        background-color: rgba(55, 56, 48, 0.8);
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .video-sidebar {
+      flex: 1;
+      background: #f8f8f8;
+      padding: 20px;
+      
+      h3 {
+        margin-top: 0;
+      }
+
+      .uploader {
+        display: flex;
+        align-items: center;
+
+        .uploader-photo {
+          display: inline-block;
+          width: 50px;
+          height: 50px;
+          border-radius: 100%;
+          margin-right: 10px;
+          background: silver;
+        }
+      }
+    }
   }
 
   .videoPlayer {

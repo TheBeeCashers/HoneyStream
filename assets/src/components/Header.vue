@@ -32,6 +32,7 @@
 
       &:focus {
         width: 300px;
+        border-color: #ddd;
       }
     }
   }

@@ -23,6 +23,14 @@ html, body {
   height: 100%;
 }
 
+main {
+  height: 100%;
+}
+
+video:not(.md-image) {
+  height: inherit;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
