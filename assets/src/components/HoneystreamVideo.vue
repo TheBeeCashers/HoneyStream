@@ -9,7 +9,7 @@
     </div>
     <div class="video-container">
       <video width="800" height="600" :controls="!previewEnded" ref="player">
-        <source :src="videoId" type="video/webm" />
+        <source :src="videoUrl" type="video/webm" />
         Your browser does not support the video tag.
       </video>
       <div v-if="previewEnded" class="paywall">
@@ -47,20 +47,29 @@ export default {
     return {
       previewDuration: 5,
       isPreview: true,
-      videoId: 'videos/low.webm',
+      videoId: '1',
       currentTime: 0,
       previewEnded: false,
+      purchased: false,
     };
   },
   mounted() {
     this.$refs.player.ontimeupdate = this.checkPreviewEnded;
     this.$refs.player.onplay = this.onPlay;
   },
+  computed: {
+    videoUrl: function () {
+      if (!this.purchased) {
+        return "http://localhost:4000/watch/" + this.videoId;
+      }
+      else {
+        return "http://localhost:4000/watch/" + this.videoId + '/high';
+      }
+    }
+  },
   methods: {
     onPlay(event) {
-      console.log("hey")
-      if (this.previewEnded) {
-        console.log("hey1")
+      if (this.previewEnded && !purchased) {
         event.preventDefault();
       }
     },
@@ -72,11 +81,11 @@ export default {
       }
     },
     handlePayment() {
-      console.log('payment');
+      this.purchased = true;
+      
       this.$refs.player.pause();
       const currTime = this.$refs.player.currentTime;
-      console.log(currTime);
-      this.videoId = 'videos/high.webm';
+
       this.$refs.player.load();
       this.$refs.player.currentTime = currTime;
       this.$refs.player.play();
@@ -103,10 +112,23 @@ a {
 }
 
 .video-container {
+  width: 800px;
+  height: 600px;
   position: relative;
+
+  .paywall {
+    position: absolute;
+    background-color: rgba(200, 232, 10, 0.8);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
-.paywall {
-  position: absolute;
-}
 </style>

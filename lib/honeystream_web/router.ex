@@ -16,7 +16,7 @@ defmodule HoneystreamWeb.Router do
   scope "/api", HoneystreamWeb do
     pipe_through :api
 
-    get("/videos", VideoController, :index)
+    resources("/videos", VideoController, only: [:index, :show])
   end
 
   scope "/", HoneystreamWeb do

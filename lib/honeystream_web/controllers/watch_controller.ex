@@ -21,11 +21,11 @@ defmodule HoneystreamWeb.WatchController do
       false -> video.path_low
     end
     file_size = get_file_size(file_path)
-  
+
     conn
     |> Plug.Conn.put_resp_header("content-type", video.content_type)
-    |> Plug.Conn.put_resp_header("content-range", "bytes #{offset}-#{file_size-1}/#{file_size}")
-    |> Plug.Conn.send_file(206, file_path, offset, file_size - offset)
+    |> Plug.Conn.put_resp_header("content-range", "bytes #{offset}-#{offset+512000}/#{file_size}")
+    |> Plug.Conn.send_file(206, file_path, offset, 512000)
   end
 
   defp get_offset(headers) do
