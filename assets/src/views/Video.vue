@@ -1,6 +1,6 @@
 <template>
   <div id="video-page">
-    <h1>{{ title }}</h1>
+    <h1>{{ currentVideo.title }}</h1>
 
     <div class="video-wrapper">
       <HoneystreamVideo :videoId="videoId" />
@@ -18,10 +18,7 @@
           </div>
 
           <h4>Description</h4>
-          
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a sem ac nunc volutpat rhoncus lacinia volutpat magna. Proin venenatis, purus id mollis molestie, ex arcu gravida lectus, vel bibendum leo nunc sit amet justo. Aliquam erat volutpat. Praesent dignissim, leo sit amet efficitur tempor, nisl sem dignissim justo, nec luctus justo odio a augue. Sed venenatis ligula nec faucibus feugiat. Fusce ornare convallis condimentum. 
-          </p>
+          <p>{{currentVideo.description}}</p>
         </div>
       </div>
     </div>
@@ -72,6 +69,21 @@ export default {
     return {
     };
   },
+<<<<<<< HEAD
+=======
+  mounted() {
+    this.getOne(this.videoId);
+  },
+  computed: {
+    ...mapState({
+      currentVideo: state => state.videos.currentVideo,
+      videos: state => state.videos.list,
+    }),
+  },
+  methods: {
+    ...mapActions('videos', ['getAll', 'getOne']),
+  },
+>>>>>>> Split payments to multiple outputs.
 };
 </script>
 

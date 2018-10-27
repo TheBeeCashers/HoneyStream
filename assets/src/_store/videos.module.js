@@ -16,7 +16,7 @@ const actions = {
         error => commit('getAllFailure', error),
       );
   },
-  setCurrent({ commit }, {id}) {
+  getOne({ commit }, id) {
     commit('getOneRequest', { id });
 
     videoService.getById(id)
@@ -25,15 +25,6 @@ const actions = {
         error => commit('getOneFailure', {id, error}),
       );
   },
-  postPayment({ commit }, {id}) {
-    commit('getOneRequest', { id });
-
-    videoService.postPayment(id)
-      .then(
-        video => commit('getOneSuccess', {id, video}),
-        error => commit('getOneFailure', {id, error}),
-      );
-  }
 };
 
 const mutations = {
@@ -50,20 +41,20 @@ const mutations = {
   getOneRequest(state, id) {
     state.data = { 
       ...state.data,
-      id: { loading: true }
+      [id]: { loading: true }
     };
   },
   getOneSuccess(state, {id, video}) {
     state.data = { 
       ...state.data,
-      id: video
+      [id]: video.data
     };
-    state.currentVideo = video;
+    state.currentVideo = video.data;
   },
   getOneFailure(state, {id, error}) {
     state.data = { 
       ...state.data,
-      id: error 
+      [id]: error 
     };
   },
 };

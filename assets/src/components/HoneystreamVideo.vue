@@ -3,6 +3,8 @@
     <ul class="video-specs">
       <li>Preview duration: {{previewDuration}}s</li>
       <li>Current time {{currentTime}}s</li>
+      <li>hs_address: {{currentVideo.hs_address}}</li>
+      <li>creator_address: {{currentVideo.creator_address}}</li>
     </ul>   
 
     <video 
@@ -30,9 +32,7 @@
     <div v-if="previewEnded && !purchased" class="paywall">
       <div>To continue watching swipe the Money Button...</div>
       <MoneyButton
-        to="371"
-        amount="0.5"
-        currency="EUR"
+        :outputs="outputs"
         label="Send some loot"
         client-identifier="69404bf8c2d75d65dd416b377a87a1c9"
         button-id="1540631889774"
@@ -71,11 +71,26 @@ export default {
   mounted() {
     this.$refs.player.ontimeupdate = this.checkPreviewEnded;
     this.$refs.player.onplay = this.onPlay;
+    this.getOne(this.videoId);
   },
   computed: {
     ...mapState({
       currentVideo: state => state.videos.currentVideo,
     }),
+    outputs: function () {
+      return [
+        {
+          to: this.currentVideo.hs_address,
+          amount: 0.1,
+          currency: "EUR",
+        },
+        {
+          to: this.currentVideo.creator_address,
+          amount: 0.2,
+          currency: "EUR",
+        }
+      ];
+    }
   },
   methods: {
     onPlay(event) {
@@ -91,7 +106,6 @@ export default {
       }
     },
     handleVideo2Loaded() {
-      console.log("oncanplay")
       if (!this.player2Loaded) {
         this.$refs.player2.removeEventListener("canplay", this.handleVideo2Loaded);
         this.player2Loaded = true;
@@ -106,7 +120,7 @@ export default {
       this.$refs.player2.load();
       this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
     },
-    ...mapActions('videos', ['postPayment']),
+    ...mapActions('videos', ['getOne']),
   },
 };
 </script>
