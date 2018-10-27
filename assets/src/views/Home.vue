@@ -4,7 +4,7 @@
     <div id="sidebar">
       <ul>
         <li v-for="video in videos">
-          <VideoThumb :video="video" />
+          <VideoThumb v-bind="video" />
         </li>
       </ul>
     </div>

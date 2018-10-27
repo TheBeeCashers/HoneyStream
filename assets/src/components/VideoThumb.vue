@@ -1,6 +1,7 @@
 <template>
   <div>
-    Video
+    <span class="title">{{title}}</span>
+    <span class="title">Id: {{id}}</span>
   </div>
 </template>
 
@@ -10,7 +11,9 @@ export default {
   },
   name: 'VideoThumb',
   props: {
-    msg: String,
+    title: String,
+    content_type: String,
+    id: Number,
   },
   data() {
     return {
