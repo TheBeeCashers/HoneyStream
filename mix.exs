@@ -42,6 +42,7 @@ defmodule Honeystream.Mixfile do
       {:gettext, "~> 0.11"},
       {:plug_cowboy, "~> 1.0"},
       {:sqlite_ecto2, "~> 2.2"},
+      {:poison, "~> 3.0"},
     ]
   end
 

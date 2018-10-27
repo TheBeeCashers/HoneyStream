@@ -18,6 +18,7 @@ defmodule HoneystreamWeb.Router do
 
     resources("/videos", VideoController, only: [:index, :show])
     get("/video/:id/payment/:user", VideoController, :check_payment)
+    post("/payment", VideoController, :webhook_payment)
   end
 
   scope "/", HoneystreamWeb do

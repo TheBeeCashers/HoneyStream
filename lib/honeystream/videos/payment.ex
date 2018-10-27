@@ -5,6 +5,8 @@ defmodule Honeystream.Videos.Payment do
   schema "payments" do
     field :button_id, :string
     field :user, :string
+    field :status, :string
+    field :raw, :string
     belongs_to :video, Honeystream.Videos.Video
 
     timestamps()
@@ -13,7 +15,7 @@ defmodule Honeystream.Videos.Payment do
   @doc false
   def changeset(payment, attrs) do
     payment
-    |> cast(attrs, [:user, :button_id])
+    |> cast(attrs, [:user, :button_id, :status, :raw])
     |> validate_required([:user, :button_id])
   end
 end

@@ -7,7 +7,8 @@ use Mix.Config
 
 # General application configuration
 config :honeystream,
-  ecto_repos: [Honeystream.Repo]
+  ecto_repos: [Honeystream.Repo],
+  webhook_secret: "ab4158b874b9a273923810a68b7f0ae8"
 
 # Configures the endpoint
 config :honeystream, HoneystreamWeb.Endpoint,
