@@ -27,7 +27,29 @@
     </div>
 
     <div id="video-related">
-      <OtherVideos :videos="videos" />
+      <!-- <OtherVideos v-bind="videos" /> -->
+
+      <h2>Other Videos</h2>
+
+      <div class="other-videos">
+        <div class="other-video">
+          <img src="https://picsum.photos/300/150" />
+          <h4>Video Title</h4>
+          <div>By Burek Sirni</div>
+        </div>
+
+        <div class="other-video">
+          <img src="https://picsum.photos/300/150?random" />
+          <h4>Video Title</h4>
+          <div>By Burek Sirni</div>
+        </div>
+
+        <div class="other-video">
+          <img src="https://picsum.photos/300/150?random" />
+          <h4>Video Title</h4>
+          <div>By Burek Sirni</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +67,7 @@ export default {
   name: 'Video',
   props: {
     videoId: Number,
+    title: String,
   },
   data() {
     return {
@@ -54,19 +77,22 @@ export default {
   },
   computed: {
     ...mapState({
-      currentVideo: state => state.videos.currentVideo,
       videos: state => state.videos.list,
     }),
   },
   methods: {
     ...mapActions('videos', ['getAll']),
   },
+  mounted() {
+    // Load all videos initially.
+    this.getAll();
+  },
 };
 </script>
 
 <style scoped lang="scss">
 #video-page {
-  padding: 20px;
+  padding: 20px 30px 20px 20px;
 
   h1 {
     margin: 0 0 10px;
@@ -121,19 +147,32 @@ export default {
     }
   }
 
-  .videoPlayer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  #video-related {
+    h2 {
+      margin-bottom: 10px;
+    }
 
-    opacity: 0;
-    z-index: 0;
+    .other-videos {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
 
-    &.active {
-      z-index: 1;
-      opacity: 1;
+      .other-video {
+        width: 32%;
+
+        img {
+          width: 100%;
+        }
+
+        h4 {
+          margin: 5px 0;
+          padding: 0;
+        }
+
+        div {
+          font-size: 14px;
+        }
+      }
     }
   }
 }

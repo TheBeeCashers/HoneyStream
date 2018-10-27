@@ -1,7 +1,8 @@
 <template>
   <div id="home">
     <Header />
-    <Video videoId=1 />
+
+    <Video videoId=1 title="Video title" />
   </div>
 </template>
 
@@ -25,16 +26,8 @@ export default {
     VideoThumb,
   },
   computed: {
-    ...mapState({
-      videos: state => state.videos.list,
-    })
   },
   methods: {
-    ...mapActions('videos', ['getAll']),
-  },
-  mounted() {
-    // Load all videos initially.
-    this.getAll();
   },
 };
 </script>
