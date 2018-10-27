@@ -12,7 +12,7 @@
           <div class="uploader">
             <div class="uploader-photo" />
             <div class="uploader-details">
-              <a href="#">Honey Streamer</a><br/>
+              <a href="#">Parov Stelar</a><br/>
               <small>October 27th, 2018</small>
             </div>
           </div>
@@ -27,27 +27,27 @@
     </div>
 
     <div id="video-related">
-      <!-- <OtherVideos v-bind="videos" /> -->
+      <!-- <OtherVideos /> -->
 
       <h2>Other Videos</h2>
 
       <div class="other-videos">
         <div class="other-video">
-          <img src="https://picsum.photos/300/150" />
+          <div class="video-thumbnail" style="background-image: url('https://picsum.photos/300/150')" />
           <h4>Video Title</h4>
-          <div>By Burek Sirni</div>
+          <div>By Parov Stelar</div>
         </div>
 
         <div class="other-video">
-          <img src="https://picsum.photos/300/150?random" />
+          <div class="video-thumbnail" style="background-image: url('https://picsum.photos/300/150?random')" />
           <h4>Video Title</h4>
-          <div>By Burek Sirni</div>
+          <div>By Parov Stelar</div>
         </div>
 
         <div class="other-video">
-          <img src="https://picsum.photos/300/150?random" />
+          <div class="video-thumbnail" style="background-image: url('https://picsum.photos/300/150?random=1')" />
           <h4>Video Title</h4>
-          <div>By Burek Sirni</div>
+          <div>By Parov Stelar</div>
         </div>
       </div>
     </div>
@@ -55,7 +55,6 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
 import OtherVideos from '@/components/OtherVideos.vue';
 import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
 
@@ -72,20 +71,6 @@ export default {
   data() {
     return {
     };
-  },
-  mounted() {
-  },
-  computed: {
-    ...mapState({
-      videos: state => state.videos.list,
-    }),
-  },
-  methods: {
-    ...mapActions('videos', ['getAll']),
-  },
-  mounted() {
-    // Load all videos initially.
-    this.getAll();
   },
 };
 </script>
@@ -156,22 +141,30 @@ export default {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+    }
 
-      .other-video {
-        width: 32%;
+    .other-video {
+      width: 32%;
 
-        img {
-          width: 100%;
-        }
+      .video-thumbnail {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        padding-bottom: 50%;
+      }
 
-        h4 {
-          margin: 5px 0;
-          padding: 0;
-        }
+      img {
+        width: 100%;
+      }
 
-        div {
-          font-size: 14px;
-        }
+      h4 {
+        margin: 10px 0 5px;
+        padding: 0;
+      }
+
+      div {
+        font-size: 14px;
       }
     }
   }
