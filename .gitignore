@@ -38,3 +38,6 @@ npm-debug.log
 /assets/yarn-error.log
 /assets/.sass-cache
 /assets/.tern-port
+
+# Video files
+/videos
