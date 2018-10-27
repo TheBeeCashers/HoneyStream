@@ -13,7 +13,7 @@
 export default {
   components: {
   },
-  name: 'videoSidebar',
+  name: 'otherVideos',
   props: {
     videos: Object
   },

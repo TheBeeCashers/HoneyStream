@@ -39,9 +39,14 @@
         text-decoration: none;
         font-weight: bold;
         border-left: solid 4px #f8f8f8;
+        transition: border-color .2s;
+
+        &:hover {
+          border-left: solid 4px #efca60;
+        }
 
         &.router-link-exact-active {
-          border-left: solid 4px #efca60;
+          border-left: solid 4px #efa348;
         }
       }
     }

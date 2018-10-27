@@ -1,14 +1,14 @@
 <template>
   <div id="home">
     <Header />
-    <HoneystreamVideo msg="Welcome to Honeystream" />
+    <Video msg="Welcome to Honeystream" />
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import Video from '@/views/Video.vue';
 import Header from '@/components/Header.vue';
-import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
 import VideoThumb from '@/components/VideoThumb.vue';
 
 const uuidv4 = require('uuid/v4');
@@ -21,7 +21,7 @@ export default {
   name: 'home',
   components: {
     Header,
-    HoneystreamVideo,
+    Video,
     VideoThumb,
   },
   computed: {
