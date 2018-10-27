@@ -9,7 +9,7 @@
     </div>
     <div class="video-container">
       <video width="800" height="600" :controls="!previewEnded" ref="player">
-        <source :src="videoId" type="video/webm" />
+        <source :src="videoUrl" type="video/webm" />
         Your browser does not support the video tag.
       </video>
       <div v-if="previewEnded" class="paywall">
@@ -47,7 +47,7 @@ export default {
     return {
       previewDuration: 5,
       isPreview: true,
-      videoId: 'videos/low.webm',
+      videoId: '1',
       currentTime: 0,
       previewEnded: false,
       purchased: false,
@@ -56,6 +56,16 @@ export default {
   mounted() {
     this.$refs.player.ontimeupdate = this.checkPreviewEnded;
     this.$refs.player.onplay = this.onPlay;
+  },
+  computed: {
+    videoUrl: function () {
+      if (!this.purchased) {
+        return "http://localhost:4000/watch/" + this.videoId;
+      }
+      else {
+        return "http://localhost:4000/watch/" + this.videoId + '/high';
+      }
+    }
   },
   methods: {
     onPlay(event) {
@@ -75,8 +85,7 @@ export default {
       
       this.$refs.player.pause();
       const currTime = this.$refs.player.currentTime;
-      
-      this.videoId = 'videos/high.webm';
+
       this.$refs.player.load();
       this.$refs.player.currentTime = currTime;
       this.$refs.player.play();
