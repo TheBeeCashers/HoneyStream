@@ -30,8 +30,8 @@ const mutations = {
   getAllRequest(state) {
     state.list = { loading: true };
   },
-  getAllSuccess(state, users) {
-    state.list = { items: users };
+  getAllSuccess(state, videos) {
+    state.list = { items: videos.data };
   },
   getAllFailure(state, error) {
     state.list = { error };
@@ -56,7 +56,7 @@ const mutations = {
   },
 };
 
-export const users = {
+export const videos = {
   namespaced: true,
   state,
   actions,
