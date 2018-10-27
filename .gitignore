@@ -5,6 +5,7 @@
 /deps
 /*.ez
 /*.sqlite3
+/*.sqlite3-*
 
 # Generated on crash by the VM
 erl_crash.dump
