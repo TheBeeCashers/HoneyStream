@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div @click="loadVideo">
     <span class="title">{{title}}</span>
     <span class="title">Id: {{id}}</span>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
   components: {
   },
@@ -23,10 +25,12 @@ export default {
   mounted() {
   },
   computed: {
-    
   },
   methods: {
-    
+    ...mapActions('videos', ['setCurrent']),
+    loadVideo() {
+      this.setCurrent(this.id);
+    }
   },
 };
 </script>

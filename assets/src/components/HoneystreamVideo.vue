@@ -2,19 +2,27 @@
   <div id="video">
     <div class="video-wrapper">
       <h1>{{ msg }}</h1>
-
       <div class="video-container">
         <video 
-          width="600" 
-          height="400" 
+          width="800" 
+          height="600" 
           :controls="!previewEnded || purchased" 
           ref="player" 
-          id="thisVideo"
-          :src="videoUrl" type="video/webm"
-          :autoplay="previewEnded && purchased">
+          id="video"
+          :class="{active: !player2Loaded, videoPlayer: true}"
+          :src="videoUrl" type="video/webm">
           Your browser does not support the video tag.
         </video>
-
+        <video
+          width="800" 
+          height="600" 
+          :controls="!previewEnded || purchased" 
+          ref="player2" 
+          id="video2"
+          :class="{active: player2Loaded, videoPlayer: true}"
+          type="video/webm">
+          Your browser does not support the video tag.
+        </video>
         <div v-if="previewEnded && !purchased" class="paywall">
           <div>To continue watching swipe the Money Button...</div>
           <MoneyButton
@@ -29,7 +37,6 @@
         </div>      
       </div>
     </div>
-
     <div class="video-sidebar">
       <VideoSidebar :videos="videos" />
     </div>
@@ -61,6 +68,7 @@ export default {
       currentTime: 0,
       previewEnded: false,
       purchased: false,
+      player2Loaded: false,
       videoUrl: "http://localhost:4000/watch/" + 1,
     };
   },
@@ -87,18 +95,21 @@ export default {
         this.previewEnded = true;
       }
     },
+    handleVideo2Loaded() {
+      console.log("oncanplay")
+      if (!this.player2Loaded) {
+        this.$refs.player2.removeEventListener("canplay", this.handleVideo2Loaded);
+        this.player2Loaded = true;
+        this.$refs.player2.currentTime = this.$refs.player.currentTime;
+        this.$refs.player2.play();
+      }
+    },
     handlePayment(payment) {
       console.log({payment})
       this.purchased = true;
-
-      this.videoUrl = "http://localhost:4000/watch/" + this.videoId + '/high';
-
-      const currTime = this.$refs.player.currentTime;
-
-      this.$refs.player.src = this.videoUrl;
-      this.$refs.player.load();
-      this.$refs.player.currentTime = currTime;
-      //this.$refs.player.play();
+      this.$refs.player2.src = "http://localhost:4000/watch/" + this.videoId + '/high';;
+      this.$refs.player2.load();
+      this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
     },
     ...mapActions('videos', ['postPayment', 'getAll']),
   },
@@ -144,6 +155,22 @@ export default {
     align-items: center;
     flex-direction: column;
     text-align: center;
+  }
+
+  .videoPlayer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    opacity: 0;
+    z-index: 0;
+
+    &.active {
+      z-index: 1;
+      opacity: 1;
+    }
   }
 }
 

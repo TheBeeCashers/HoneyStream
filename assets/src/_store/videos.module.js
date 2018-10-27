@@ -3,6 +3,7 @@ import { videoService } from '../_services';
 const state = {
   list: {},
   data: {},
+  currentVideo: {},
 };
 
 const actions = {
@@ -15,7 +16,7 @@ const actions = {
         error => commit('getAllFailure', error),
       );
   },
-  getOne({ commit }, {id}) {
+  setCurrent({ commit }, {id}) {
     commit('getOneRequest', { id });
 
     videoService.getById(id)
@@ -24,6 +25,15 @@ const actions = {
         error => commit('getOneFailure', {id, error}),
       );
   },
+  postPayment({ commit }, {id}) {
+    commit('getOneRequest', { id });
+
+    videoService.postPayment(id)
+      .then(
+        video => commit('getOneSuccess', {id, video}),
+        error => commit('getOneFailure', {id, error}),
+      );
+  }
 };
 
 const mutations = {
@@ -36,10 +46,11 @@ const mutations = {
   getAllFailure(state, error) {
     state.list = { error };
   },
+  // getOne
   getOneRequest(state, id) {
     state.data = { 
-        ...state.data,
-        id: { loading: true }
+      ...state.data,
+      id: { loading: true }
     };
   },
   getOneSuccess(state, {id, video}) {
@@ -47,6 +58,7 @@ const mutations = {
       ...state.data,
       id: video
     };
+    state.currentVideo = video;
   },
   getOneFailure(state, {id, error}) {
     state.data = { 
