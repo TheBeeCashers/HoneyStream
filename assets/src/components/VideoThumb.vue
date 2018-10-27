@@ -1,6 +1,6 @@
 <template>
   <div class="other-video" @click="loadVideo">
-    <div class="video-thumbnail" :style="{ backgroundImage: 'url('+thumbnail_url+')' }" />
+    <div class="video-thumbnail" :style="{ backgroundImage: 'url('+thumbnailUrl+')' }" />
     <h4>{{title}}</h4>
     <div>By Parov Stelar</div>
   </div>
@@ -10,14 +10,11 @@
 import { mapActions } from 'vuex';
 
 export default {
-  components: {
-  },
-  name: 'videoThumb',
+  name: 'VideoThumb',
   props: {
     title: String,
-    content_type: String,
     id: Number,
-    thumbnail_url: String,
+    thumbnailUrl: String,
   },
   methods: {
     ...mapActions('videos', ['setCurrent']),

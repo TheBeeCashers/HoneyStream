@@ -32,7 +32,7 @@ const mutations = {
     state.list = { loading: true };
   },
   getAllSuccess(state, videos) {
-    state.list = { items: videos.data };
+    state.list = videos.data;
   },
   getAllFailure(state, error) {
     state.list = { error };

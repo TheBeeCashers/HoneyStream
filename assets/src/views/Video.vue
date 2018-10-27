@@ -25,28 +25,6 @@
 
     <div id="video-related">
       <OtherVideos />
-
-      <h2>Other Videos</h2>
-
-      <div class="other-videos">
-        <div class="other-video">
-          <div class="video-thumbnail" style="background-image: url('https://picsum.photos/300/150')" />
-          <h4>Video Title</h4>
-          <div>By Parov Stelar</div>
-        </div>
-
-        <div class="other-video">
-          <div class="video-thumbnail" style="background-image: url('https://picsum.photos/300/150?random')" />
-          <h4>Video Title</h4>
-          <div>By Parov Stelar</div>
-        </div>
-
-        <div class="other-video">
-          <div class="video-thumbnail" style="background-image: url('https://picsum.photos/300/150?random=1')" />
-          <h4>Video Title</h4>
-          <div>By Parov Stelar</div>
-        </div>
-      </div>
     </div>
   </div>
 </template>

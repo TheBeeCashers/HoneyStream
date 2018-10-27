@@ -1,8 +1,13 @@
 <template>
   <div>
     <h2>Other Videos</h2>
-    <div v-bind:key="video.id" v-for="video in videos" class="other-videos">
-      <VideoThumb v-bind="video" />
+    <div class="other-videos">
+      <VideoThumb v-for="video in videos" 
+        :key="video.id" 
+        v-bind:title="video.title"
+        v-bind:id="video.id"
+        v-bind:thumbnailUrl="video.thumbnail_url"
+        />
     </div>
   </div>
 </template>
@@ -16,9 +21,6 @@ export default {
     VideoThumb,
   },
   name: 'otherVideos',
-  props: {
-    videos: Object,
-  },
   computed: {
     ...mapState({
       videos: state => state.videos.list,
