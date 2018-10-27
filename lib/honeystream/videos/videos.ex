@@ -7,6 +7,7 @@ defmodule Honeystream.Videos do
   alias Honeystream.Repo
 
   alias Honeystream.Videos.Video
+  alias Honeystream.Videos.Payment
 
   @doc """
   Returns the list of videos.
@@ -101,4 +102,11 @@ defmodule Honeystream.Videos do
   def change_video(%Video{} = video) do
     Video.changeset(video, %{})
   end
+
+  @doc """
+  Gets a single payment.
+
+  Raises `Ecto.NoResultsError` if the Video does not exist.
+  """
+  def get_payment(video_id, user), do: Repo.get_by(Payment, %{video_id: video_id, user: user})
 end
