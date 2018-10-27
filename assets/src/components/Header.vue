@@ -5,7 +5,7 @@
     </div>
 
     <div class="icons">
-      <img src="https://www.svgrepo.com/show/9778/login.svg" />
+      <img src="https://www.svgrepo.com/show/12324/cloud-uploading-arrow.svg" />
     </div>
   </div>
 </template>

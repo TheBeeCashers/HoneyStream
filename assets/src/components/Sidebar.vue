@@ -4,12 +4,33 @@
       <img src="https://www.svgrepo.com/show/11281/honey.svg" />
     </div>
 
+<!-- <font-awesome-icon icon="home" />  -->
     <ul class="main-menu">
       <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/user">User</router-link></li>
+      <li><router-link to="/browse">Browse</router-link></li>
+      <li><router-link to="/top">Top Videos</router-link></li>
+      <li class="separator" />
+      <li><router-link to="/library">Your Videos</router-link></li>
+      <li><router-link to="/purchases">Your Purchases</router-link></li>
+      <li><router-link to="/user">Settings</router-link></li>
     </ul>
   </div>
 </template>
+
+<script>
+// import Vue from 'vue'
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { faHome, faBookReader, faStar } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// library.add(faHome)
+// library.add(faBookReader)
+// library.add(faStar)
+// Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+// export default {
+//   name: 'Sidebar',
+// }
+</script>
 
 <style scoped lang="scss">
 #sidebar {
@@ -31,6 +52,13 @@
 
     li {
       padding: 10px 0;
+
+      &.separator {
+        height: 0;
+        border-top: solid 1px #ececec;
+        margin-top: 10px;
+        padding-bottom: 2px;
+      }
 
       a {
         display: block;
