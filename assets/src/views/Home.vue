@@ -1,24 +1,26 @@
 <template>
-  <div class="home">
+  <div id="home">
+    <Header />
     <HoneystreamVideo msg="Welcome to Honeystream" />
-    <div id="sidebar">
-      <ul>
-        <li v-for="video in videos">
-          <VideoThumb v-bind="video" />
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import Header from '@/components/Header.vue';
 import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
 import VideoThumb from '@/components/VideoThumb.vue';
+
+const uuidv4 = require('uuid/v4');
+
+if (!localStorage.getItem('hs-uuid')) {
+  localStorage.setItem('hs-uuid', uuidv4())
+}
 
 export default {
   name: 'home',
   components: {
+    Header,
     HoneystreamVideo,
     VideoThumb,
   },
@@ -38,7 +40,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .home {
-    text-align: center;
-  }
+#home {
+  flex: 1;
+}
 </style>

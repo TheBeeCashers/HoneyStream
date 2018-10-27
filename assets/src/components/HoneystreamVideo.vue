@@ -1,50 +1,53 @@
 <template>
-  <div>
-    <h1>{{ msg }}</h1>
-    <div>
-      <ul>
-        <li>Preview duration: {{previewDuration}}</li>
-        <li>Current time {{currentTime}}</li>
-      </ul>
+  <div id="video">
+    <div class="video-wrapper">
+      <h1>{{ msg }}</h1>
+
+      <div class="video-container">
+        <video 
+          width="600" 
+          height="400" 
+          :controls="!previewEnded || purchased" 
+          ref="player" 
+          id="thisVideo"
+          :src="videoUrl" type="video/webm"
+          :autoplay="previewEnded && purchased">
+          Your browser does not support the video tag.
+        </video>
+
+        <div v-if="previewEnded && !purchased" class="paywall">
+          <div>To continue watching swipe the Money Button...</div>
+          <MoneyButton
+            to="371"
+            amount="0.5"
+            currency="EUR"
+            label="Send some loot"
+            client-identifier="69404bf8c2d75d65dd416b377a87a1c9"
+            button-id="1540631889774"
+            @payment="handlePayment"
+          />
+        </div>      
+      </div>
     </div>
-    <div class="video-container">
-      <video 
-        width="800" 
-        height="600" 
-        :controls="!previewEnded || purchased" 
-        ref="player" 
-        id="thisVideo"
-        :src="videoUrl" type="video/webm"
-        :autoplay="previewEnded && purchased">
-        Your browser does not support the video tag.
-      </video>
-      <div v-if="previewEnded && !purchased" class="paywall">
-        <div>To continue watching swipe the Money Button...</div>
-        <MoneyButton
-          to="371"
-          amount="0.5"
-          currency="EUR"
-          label="Send some loot"
-          client-identifier="69404bf8c2d75d65dd416b377a87a1c9"
-          button-id="1540631889774"
-          @payment="handlePayment"
-        />
-      </div>      
+
+    <div class="video-sidebar">
+      <VideoSidebar :videos="videos" />
     </div>
   </div>
 </template>
 
 <script>
-
 import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
 import MoneyButton from 'vue-money-button';
+import VideoSidebar from '@/components/VideoSidebar.vue';
 
 Vue.use(MoneyButton);
 
 export default {
   components: {
     MoneyButton,
+    VideoSidebar,
   },
   name: 'HoneystreamVideo',
   props: {
@@ -68,7 +71,8 @@ export default {
   computed: {
     ...mapState({
       currentVideo: state => state.videos.currentVideo,
-    })
+      videos: state => state.videos.list,
+    }),
   },
   methods: {
     onPlay(event) {
@@ -96,30 +100,36 @@ export default {
       this.$refs.player.currentTime = currTime;
       //this.$refs.player.play();
     },
-    ...mapActions('videos', ['postPayment']),
+    ...mapActions('videos', ['postPayment', 'getAll']),
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+#video {
+  display: flex;
+  padding: 20px;
+
+  h1 {
+    margin: 0 0 10px;
+    padding: 0;
+
+  }
+
+  .video-wrapper {
+    flex: 1;
+  }
+
+  .video-sidebar {
+    width: 300px;
+    background: silver;
+  }
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 .video-container {
-  width: 800px;
-  height: 600px;
+  width: 600px;
+  height: 400px;
   position: relative;
 
   .paywall {

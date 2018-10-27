@@ -6,18 +6,15 @@
 </template>
 
 <script>
-const uuidv4 = require('uuid/v4')
-
 export default {
   components: {
   },
-  name: 'User',
+  name: 'user',
   props: {
-    msg: String,
   },
   data() {
     return {
-      uuid: uuidv4(),
+      uuid: localStorage.getItem('hs-uuid') || 'anon'
     };
   },
   mounted() {
