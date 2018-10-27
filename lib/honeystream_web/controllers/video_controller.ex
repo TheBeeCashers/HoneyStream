@@ -6,6 +6,8 @@ defmodule HoneystreamWeb.VideoController do
 
   action_fallback HoneystreamWeb.FallbackController
 
+  @webhook_secret Application.get_env(:honeystream, :webhook_secret)
+
   def index(conn, _params) do
     videos = Videos.list_videos()
     render(conn, "index.json", videos: videos)
@@ -45,5 +47,21 @@ defmodule HoneystreamWeb.VideoController do
       nil -> render(conn, "payment.json", success: false)
       video -> render(conn, "payment.json", success: true)
     end
+  end
+
+  def webhook_payment(conn, %{"payment" => payment, "secret" => @webhook_secret}) do
+    {:ok, button_data} = Poison.decode(payment["buttonData"])
+    {video_id, _} = Integer.parse(button_data["video_id"])
+    {:ok, raw} = Poison.encode(payment)
+    Videos.upsert_payment(video_id, %{
+      user: payment["userId"],
+      button_id: payment["buttonId"],
+      status: payment["status"],
+      raw: raw,
+    })
+    send_resp(conn, 200, "Thank you...")
+  end
+  def webhook_payment(conn, _) do
+    send_resp(conn, 403, "Won't go!")
   end
 end

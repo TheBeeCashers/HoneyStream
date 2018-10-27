@@ -109,4 +109,26 @@ defmodule Honeystream.Videos do
   Raises `Ecto.NoResultsError` if the Video does not exist.
   """
   def get_payment(video_id, user), do: Repo.get_by(Payment, %{video_id: video_id, user: user})
+
+  @doc """
+  Creates or updates a payment.
+  """
+  def upsert_payment(video_id, attrs) do
+    video = video_id
+    |> get_video!
+    |> Repo.preload(:payments)
+
+    case get_payment(video_id, attrs.user) do
+      nil ->
+        video
+        |> Ecto.Changeset.change(%{payments: video.payments ++ [Map.merge(%Payment{}, attrs)]})
+        |> Repo.update()
+
+      payment ->
+        payment
+        |> Repo.preload(:video)
+        |> Payment.changeset(attrs)
+        |> Repo.update()
+    end
+  end
 end
