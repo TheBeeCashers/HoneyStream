@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2>Other Videos</h2>
-
     <div v-bind:key="video.id" v-for="video in videos" class="other-videos">
       <VideoThumb v-bind="video" />
     </div>

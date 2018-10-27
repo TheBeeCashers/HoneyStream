@@ -1,6 +1,6 @@
 <template>
   <div id="video-page">
-    <h1>{{ currentVideo.title || 'No Title :(' }}</h1>
+    <h1>{{ currentVideo.title }}</h1>
 
     <div class="video-wrapper">
       <HoneystreamVideo :videoId="videoId" />
@@ -18,13 +18,13 @@
           </div>
 
           <h4>Description</h4>
-          <p>{{currentVideo.description || 'No Description :(' }}</p>
+          <p>{{currentVideo.description}}</p>
         </div>
       </div>
     </div>
 
     <div id="video-related">
-      <!-- <OtherVideos /> -->
+      <OtherVideos />
 
       <h2>Other Videos</h2>
 
@@ -76,11 +76,10 @@ export default {
   computed: {
     ...mapState({
       currentVideo: state => state.videos.currentVideo,
-      videos: state => state.videos.list,
     }),
   },
   methods: {
-    ...mapActions('videos', ['getAll', 'getOne']),
+    ...mapActions('videos', ['getOne']),
   },
 };
 </script>

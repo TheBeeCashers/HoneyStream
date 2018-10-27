@@ -1,6 +1,6 @@
 <template>
   <div class="other-video" @click="loadVideo">
-    <div class="video-thumbnail" :style="{ backgroundImage: url(thumbnail_url) }" />
+    <div class="video-thumbnail" :style="{ backgroundImage: 'url('+thumbnail_url+')' }" />
     <h4>{{title}}</h4>
     <div>By Parov Stelar</div>
   </div>
@@ -18,15 +18,6 @@ export default {
     content_type: String,
     id: Number,
     thumbnail_url: String,
-  },
-  data() {
-    return {
-      
-    };
-  },
-  mounted() {
-  },
-  computed: {
   },
   methods: {
     ...mapActions('videos', ['setCurrent']),
