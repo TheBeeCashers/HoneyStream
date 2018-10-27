@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <Header />
-    <Video msg="Welcome to Honeystream" />
+    <Video videoId=1 />
   </div>
 </template>
 

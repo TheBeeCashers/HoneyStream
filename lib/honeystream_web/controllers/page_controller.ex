@@ -5,4 +5,9 @@ defmodule HoneystreamWeb.PageController do
      conn
       |> render("app.html")
   end
+
+  def embed(conn, _params) do
+    conn
+    |> render("embed.html")
+  end
 end

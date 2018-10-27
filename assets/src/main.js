@@ -1,10 +1,8 @@
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
 import App from './App.vue';
+import Embed from './Embed.vue';
 import { router } from './router';
 import store from './store';
-
-Vue.use(VeeValidate);
 
 Vue.config.productionTip = false;
 
@@ -13,3 +11,8 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app');
+
+new Vue({
+  store,
+  render: h => h(Embed),
+}).$mount('#embed');

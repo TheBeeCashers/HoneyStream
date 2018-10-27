@@ -55,18 +55,17 @@ export default {
   },
   name: 'HoneystreamVideo',
   props: {
-    msg: String,
+    videoId: Number,
   },
   data() {
     return {
       previewDuration: 5,
       isPreview: true,
-      videoId: '1',
       currentTime: 0,
       previewEnded: false,
       purchased: false,
       player2Loaded: false,
-      videoUrl: "http://localhost:4000/watch/" + 1,
+      videoUrl: "http://localhost:4000/watch/" + this.videoId,
     };
   },
   mounted() {

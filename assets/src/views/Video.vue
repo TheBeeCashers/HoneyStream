@@ -1,9 +1,9 @@
 <template>
   <div id="video-page">
-    <h1>{{ msg }}</h1>
+    <h1>{{ title }}</h1>
 
     <div class="video-wrapper">
-      <HoneystreamVideo />
+      <HoneystreamVideo :videoId="videoId" />
         
       <div class="video-sidebar">
         <div>
@@ -27,7 +27,7 @@
     </div>
 
     <div id="video-related">
-      <OtherVideos v-bind:videos="videos" />
+      <OtherVideos :videos="videos" />
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
   },
   name: 'Video',
   props: {
-    msg: String,
+    videoId: Number,
   },
   data() {
     return {
