@@ -1,6 +1,6 @@
 <template>
   <div id="video-page">
-    <h1>{{ currentVideo.title }}</h1>
+    <h1>{{ currentVideo.title || 'No Title :(' }}</h1>
 
     <div class="video-wrapper">
       <HoneystreamVideo :videoId="videoId" />
@@ -18,7 +18,7 @@
           </div>
 
           <h4>Description</h4>
-          <p>{{currentVideo.description}}</p>
+          <p>{{currentVideo.description || 'No Description :(' }}</p>
         </div>
       </div>
     </div>
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import OtherVideos from '@/components/OtherVideos.vue';
 import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
 
@@ -69,8 +70,6 @@ export default {
     return {
     };
   },
-<<<<<<< HEAD
-=======
   mounted() {
     this.getOne(this.videoId);
   },
@@ -83,7 +82,6 @@ export default {
   methods: {
     ...mapActions('videos', ['getAll', 'getOne']),
   },
->>>>>>> Split payments to multiple outputs.
 };
 </script>
 
