@@ -10,6 +10,7 @@ defmodule Honeystream.Videos.Video do
     field :path_low, :string
     field :title, :string
     field :video_file, :any, virtual: true
+    has_many :payments, Honeystream.Videos.Payment
 
     timestamps()
   end

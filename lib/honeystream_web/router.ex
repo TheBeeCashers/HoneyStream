@@ -17,6 +17,7 @@ defmodule HoneystreamWeb.Router do
     pipe_through :api
 
     resources("/videos", VideoController, only: [:index, :show])
+    get("/video/:id/payment/:user", VideoController, :check_payment)
   end
 
   scope "/", HoneystreamWeb do
@@ -27,7 +28,6 @@ defmodule HoneystreamWeb.Router do
     get("/watch/:id/high", WatchController, :stream_high)
     get("/watch/:id", WatchController, :stream_low)
   end
-
 
 end
 

@@ -39,4 +39,11 @@ defmodule HoneystreamWeb.VideoController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def check_payment(conn, %{"id" => video_id, "user" => user_identifier}) do
+    case Videos.get_payment(video_id, user_identifier) do
+      nil -> render(conn, "payment.json", success: false)
+      video -> render(conn, "payment.json", success: true)
+    end
+  end
 end

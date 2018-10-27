@@ -10,6 +10,10 @@ defmodule HoneystreamWeb.VideoView do
     %{data: render_one(video, VideoView, "video.json")}
   end
 
+  def render("payment.json", %{success: payment_done}) do
+    %{payment: payment_done}
+  end
+
   def render("video.json", %{video: video}) do
     %{id: video.id,
       title: video.title,
