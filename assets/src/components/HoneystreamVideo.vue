@@ -8,12 +8,18 @@
       </ul>
     </div>
     <div class="video-container">
-      <video width="800" height="600" :controls="!previewEnded" ref="player">
-        <source :src="videoUrl" type="video/webm" />
+      <video 
+        width="800" 
+        height="600" 
+        :controls="!previewEnded || purchased" 
+        ref="player" 
+        id="thisVideo"
+        :src="videoUrl" type="video/webm"
+        :autoplay="previewEnded && purchased">
         Your browser does not support the video tag.
       </video>
-      <div v-if="previewEnded" class="paywall">
-        <div>PAAY NOOOW!</div>
+      <div v-if="previewEnded && !purchased" class="paywall">
+        <div>To continue watching swipe the Money Button...</div>
         <MoneyButton
           to="371"
           amount="0.5"
@@ -31,6 +37,7 @@
 <script>
 
 import Vue from 'vue';
+import { mapState, mapActions } from 'vuex';
 import MoneyButton from 'vue-money-button';
 
 Vue.use(MoneyButton);
@@ -51,6 +58,7 @@ export default {
       currentTime: 0,
       previewEnded: false,
       purchased: false,
+      videoUrl: "http://localhost:4000/watch/" + 1,
     };
   },
   mounted() {
@@ -58,38 +66,37 @@ export default {
     this.$refs.player.onplay = this.onPlay;
   },
   computed: {
-    videoUrl: function () {
-      if (!this.purchased) {
-        return "http://localhost:4000/watch/" + this.videoId;
-      }
-      else {
-        return "http://localhost:4000/watch/" + this.videoId + '/high';
-      }
-    }
+    ...mapState({
+      currentVideo: state => state.videos.currentVideo,
+    })
   },
   methods: {
     onPlay(event) {
-      if (this.previewEnded && !purchased) {
+      if (this.previewEnded && !this.purchased) {
         event.preventDefault();
       }
     },
     checkPreviewEnded() {
       this.currentTime = this.$refs.player.currentTime;
-      if (this.currentTime > this.previewDuration) {
+      if (!this.purchased && (this.currentTime > this.previewDuration)) {
         this.$refs.player.pause();
         this.previewEnded = true;
       }
     },
-    handlePayment() {
+    handlePayment(payment) {
+      console.log({payment})
       this.purchased = true;
-      
-      this.$refs.player.pause();
+
+      this.videoUrl = "http://localhost:4000/watch/" + this.videoId + '/high';
+
       const currTime = this.$refs.player.currentTime;
 
+      this.$refs.player.src = this.videoUrl;
       this.$refs.player.load();
       this.$refs.player.currentTime = currTime;
-      this.$refs.player.play();
+      //this.$refs.player.play();
     },
+    ...mapActions('videos', ['postPayment']),
   },
 };
 </script>
@@ -110,7 +117,6 @@ li {
 a {
   color: #42b983;
 }
-
 .video-container {
   width: 800px;
   height: 600px;
@@ -118,7 +124,7 @@ a {
 
   .paywall {
     position: absolute;
-    background-color: rgba(200, 232, 10, 0.8);
+    background-color: rgba(55, 56, 48, 0.8);
     top: 0;
     right: 0;
     bottom: 0;
