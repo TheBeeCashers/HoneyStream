@@ -24,7 +24,8 @@ defmodule HoneystreamWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :index)
-    get("/watch/:id", WatchController, :stream)
+    get("/watch/:id/high", WatchController, :stream_high)
+    get("/watch/:id", WatchController, :stream_low)
   end
 
 

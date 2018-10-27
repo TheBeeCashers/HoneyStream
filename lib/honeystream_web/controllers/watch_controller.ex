@@ -6,10 +6,20 @@ defmodule HoneystreamWeb.WatchController do
 
   action_fallback HoneystreamWeb.FallbackController
 
-  def stream(conn, %{"id" => id}) do
-    video = Videos.get_video!(id)
-    file_path = "videos/" <> video.path_high
+  def stream_low(conn, %{"id" => id}) do
+    stream_video(Videos.get_video!(id), conn)
+  end
+
+  def stream_high(conn, %{"id" => id}) do
+    stream_video(Videos.get_video!(id), conn, true)
+  end
+
+  defp stream_video(video, conn, high_quality \\ false) do
     offset = get_offset(conn.req_headers)
+    file_path = "videos/" <> case high_quality do
+      true -> video.path_high
+      false -> video.path_low
+    end
     file_size = get_file_size(file_path)
   
     conn
