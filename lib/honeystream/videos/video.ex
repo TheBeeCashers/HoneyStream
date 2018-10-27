@@ -9,6 +9,9 @@ defmodule Honeystream.Videos.Video do
     field :path_high, :string
     field :path_low, :string
     field :title, :string
+    field :description, :string
+    field :thumbnail_id, :string
+    field :creator_address, :string
     field :video_file, :any, virtual: true
     has_many :payments, Honeystream.Videos.Payment
 
@@ -18,7 +21,17 @@ defmodule Honeystream.Videos.Video do
   @doc false
   def changeset(video, attrs) do
     video
-    |> cast(attrs, [:title, :filename_high, :filename_low, :content_type, :path_high, :path_low])
+    |> cast(attrs, [
+      :title,
+      :filename_high,
+      :filename_low,
+      :content_type,
+      :path_high,
+      :path_low,
+      :description,
+      :thumbnail_id,
+      :creator_address,
+    ])
     |> validate_required([:title, :video_file])
   end
 end

@@ -17,10 +17,10 @@ defmodule HoneystreamWeb.VideoView do
   def render("video.json", %{video: video}) do
     %{id: video.id,
       title: video.title,
-      filename_high: video.filename_high,
-      filename_low: video.filename_low,
-      content_type: video.content_type,
-      path_high: video.path_high,
-      path_low: video.path_low}
+      description: video.description,
+      hs_address: Application.get_env(:honeystream, :address),
+      creator_address: video.creator_address,
+      thumbnail_url: "/thumbnail/" <> video.thumbnail_id,
+    }
   end
 end

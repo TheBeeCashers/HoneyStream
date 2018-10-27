@@ -29,6 +29,7 @@ defmodule HoneystreamWeb.Router do
     get("/embed/:id", PageController, :embed)
     get("/watch/:id/high", WatchController, :stream_high)
     get("/watch/:id", WatchController, :stream_low)
+    get("/thumbnail/:id", VideoController, :thumbnail)
   end
 
 end

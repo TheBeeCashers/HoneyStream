@@ -49,6 +49,14 @@ defmodule HoneystreamWeb.VideoController do
     end
   end
 
+  def thumbnail(conn, %{"id" => id}) do
+    thumbnail_path = "videos/" <> id <> ".png"
+    
+    conn
+      |> Plug.Conn.put_resp_header("content-type", "image/png")
+      |> Plug.Conn.send_file(200, thumbnail_path)
+  end
+
   def webhook_payment(conn, %{"payment" => payment, "secret" => @webhook_secret}) do
     {:ok, button_data} = Poison.decode(payment["buttonData"])
     {video_id, _} = Integer.parse(button_data["video_id"])
