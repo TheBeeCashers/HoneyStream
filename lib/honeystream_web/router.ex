@@ -1,7 +1,6 @@
 defmodule HoneystreamWeb.Router do
   use HoneystreamWeb, :router
 
-
   pipeline :browser do
     plug(:accepts, ["html"])
     plug(:fetch_session)

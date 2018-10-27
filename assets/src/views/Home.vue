@@ -1,16 +1,16 @@
 <template>
   <div class="home">
-    <Dashboard msg="Welcome to Tabsplit"/>
+    <HoneystreamVideo msg="Welcome to Honeystream" />
   </div>
 </template>
 
 <script>
-import Dashboard from '@/components/Dashboard.vue';
+import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
 
 export default {
   name: 'home',
   components: {
-    Dashboard,
+    HoneystreamVideo,
   },
 };
 </script>
