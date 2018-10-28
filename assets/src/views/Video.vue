@@ -19,7 +19,7 @@
           </div>
 
           <h4>Description</h4>
-          <p class="video-description" v-html="currentVideo.description"></p>
+          <p class="video-description" v-html="currentVideo.description" />
         </div>
       </div>
     </div>
@@ -34,11 +34,13 @@
 import { mapState, mapActions } from 'vuex';
 import OtherVideos from '@/components/OtherVideos.vue';
 import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
+import Footer from "@/components/Footer.vue";
 
 export default {
   components: {
     OtherVideos,
     HoneystreamVideo,
+    Footer,
   },
   name: 'Video',
   props: {
@@ -68,6 +70,17 @@ export default {
   },
 };
 </script>
+
+<style>
+.video-description a {
+  color: #eaad4d !important;
+  text-decoration: none !important;
+  transition: color .2s;
+}
+.video-description a:hover {
+  color: #efca60 !important;
+}
+</style>
 
 <style scoped lang="scss">
 #video-page {
@@ -167,5 +180,4 @@ export default {
     }
   }
 }
-
 </style>

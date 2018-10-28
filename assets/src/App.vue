@@ -21,16 +21,13 @@ export default {
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100vh;
+  min-height: 100vh;
 }
 
 body {
   font-size: 14px;
   letter-spacing: .01em;
-}
-
-main {
-  height: 100%;
 }
 
 #app {

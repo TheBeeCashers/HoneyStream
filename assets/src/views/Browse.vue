@@ -7,6 +7,8 @@
       <OtherVideos category="recommended" />
       <OtherVideos category="viewed" />
     </div>
+
+    <Footer />
   </div>
 </template>
 
@@ -14,11 +16,13 @@
 import { mapState, mapActions } from "vuex";
 import OtherVideos from '@/components/OtherVideos.vue';
 import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
   components: {
     OtherVideos,
     Header,
+    Footer,
   },
   name: 'browse',
   computed: {

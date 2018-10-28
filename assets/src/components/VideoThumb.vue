@@ -15,7 +15,8 @@ export default {
     thumbnailUrl: String,
   },
   methods: {
-    loadVideo() {
+    loadVideo(e) {
+      e.preventDefault()
       this.$router.push('/video/' + this.id);
     }
   },

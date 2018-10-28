@@ -20,7 +20,7 @@
         v-bind:title="video.title"
         v-bind:id="video.id"
         v-bind:thumbnailUrl="video.thumbnail_url"
-        />
+      />
     </div>
   </div>
 </template>
