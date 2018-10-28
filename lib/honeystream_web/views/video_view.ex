@@ -21,6 +21,7 @@ defmodule HoneystreamWeb.VideoView do
       hs_address: Application.get_env(:honeystream, :address),
       creator_address: video.creator_address,
       thumbnail_url: "/thumbnail/" <> video.thumbnail_id,
+      paywall_type: video.paywall_type,
     }
   end
 end
