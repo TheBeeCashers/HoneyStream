@@ -40,12 +40,14 @@ export default {
           'Authorization': 'Bearer ' + token,
         }
       })
-      if (res.status === 200 && !hsUser) {
-        const user = await res.json();
-        const id = user.data.attributes.id;
-        const name = user.data.attributes.name;
-        localStorage.setItem('hs-user', '{ "id": "' + id + '", "name": "' + name + '" }')
-        this.userName = name
+      if (res.status === 200) {
+        if (!hsUser) {
+          const user = await res.json();
+          const id = user.data.attributes.id;
+          const name = user.data.attributes.name;
+          localStorage.setItem('hs-user', '{ "id": "' + id + '", "name": "' + name + '" }')
+          this.userName = name
+        }
       }
       else {
         localStorage.removeItem('hs-user');
