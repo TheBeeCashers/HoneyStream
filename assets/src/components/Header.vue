@@ -12,7 +12,7 @@
 
 <style scoped lang="scss">
 #header {
-  padding: 10px 20px;
+  padding: 10px 30px 10px 20px;
   border-bottom: solid 1px #ececec;
   display: flex;
   flex-direction: row;

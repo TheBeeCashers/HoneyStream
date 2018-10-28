@@ -48,7 +48,7 @@
         </div>
 
         <input type="button" value="Upload" class="upload-button" />
-        <input type="button" value="Cancel" class="cancel-button" @click:prevent="cancel" />
+        <input type="button" value="Cancel" class="cancel-button" @click="cancel" />
       </form>
     </div>
   </div>
@@ -83,7 +83,8 @@ export default {
     handleFilePondInit: function() {
       console.log('FilePond has initialized');
     },
-    cancel: () => {
+    cancel(e) {
+      e.preventDefault()
       router.push('browse')
     },
   },

@@ -19,7 +19,7 @@
           </div>
 
           <h4>Description</h4>
-          <p v-html="currentVideo.description"></p>
+          <p class="video-description" v-html="currentVideo.description"></p>
         </div>
       </div>
     </div>
@@ -109,13 +109,17 @@ export default {
           height: 50px;
           border-radius: 100%;
           margin-right: 10px;
-          background: silver center center no-repeat url('https://laughloveliveitall.files.wordpress.com/2014/07/happy-person.jpg');
+          background: silver center center no-repeat url('http://electroniccolorado.com/wp-content/uploads/2016/04/parov.jpg');
           background-size: cover;
         }
 
         .uploader-details {
           flex-direction: column;
         }
+      }
+
+      .video-description {
+        line-height: 1.7em;
       }
     }
   }

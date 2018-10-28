@@ -24,12 +24,13 @@ html, body {
   height: 100%;
 }
 
-main {
-  height: 100%;
+body {
+  font-size: 14px;
+  letter-spacing: .01em;
 }
 
-video:not(.md-image) {
-  height: inherit;
+main {
+  height: 100%;
 }
 
 #app {
@@ -41,5 +42,14 @@ video:not(.md-image) {
   display: flex;
   flex-direction: row;
   height: 100%;
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.8em;
+    margin-block-end: 17px;
+  }
 }
 </style>

@@ -18,6 +18,7 @@
     "vue-material": "^1.0.0-beta-10.2",
     "vue-money-button": "^0.0.6",
     "vue-router": "^3.0.1",
+    "vue-video-player": "^5.0.2",
     "vue-youtube-embed": "^2.2.1",
     "vuex": "^3.0.1"
   },

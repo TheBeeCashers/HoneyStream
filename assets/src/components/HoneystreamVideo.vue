@@ -1,5 +1,15 @@
 <template>
   <div class="video-container">
+    <!-- <video-player 
+      class="video-player-box"
+      ref="videoPlayer"
+      height="400"
+      width="600"
+      :options="playerOptions"
+      :playsinline="true"
+      customEventName="customstatechangedeventname"
+      @ready="playerReadied">
+    </video-player> -->
     <ul class="video-specs">
       <li>Preview duration: {{previewDuration}}s</li>
       <li>Current time {{currentTime}}s</li>
@@ -18,21 +28,27 @@
       Your browser does not support the video tag.
     </video>
 
-    <video
-      width="600" 
-      height="400" 
-      :controls="!previewEnded || purchased" 
-      ref="player2" 
-      id="video2"
-      :class="{active: player2Loaded, videoPlayer: true}"
-      type="video/webm">
-      Your browser does not support the video tag.
-    </video>
+    <div v-if="purchased">
+      <video
+        width="600" 
+        height="400" 
+        :controls="!previewEnded || purchased" 
+        ref="player2" 
+        id="video2"
+        :class="{active: player2Loaded, videoPlayer: true}"
+        type="video/webm">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
-    <div v-if="previewEnded && !purchased" class="paywall">
-      <div>To continue watching swipe the Money Button...</div>
+    <div :class="{ paywall: true, active: previewEnded && !purchased }">
+      <div class="paywall-text">To continue watching swipe the Money Button.</div>
+
+      <!-- <input type="submit" @click="hidePaywall" value="hide this shit" /><br/> -->
+
       <MoneyButton
         :outputs="outputs"
+        ref="moneyButton"
         label="Send some loot"
         client-identifier="69404bf8c2d75d65dd416b377a87a1c9"
         button-id="1540631889774"
@@ -46,12 +62,16 @@
 import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
 import MoneyButton from 'vue-money-button';
+// import { videoPlayer } from 'vue-video-player'
+
+// import 'video.js/dist/video-js.css'
 
 Vue.use(MoneyButton);
 
 export default {
   components: {
     MoneyButton,
+    // videoPlayer,
   },
   name: 'HoneystreamVideo',
   props: {
@@ -65,6 +85,18 @@ export default {
       previewEnded: false,
       purchased: false,
       player2Loaded: false,
+      // playerOptions: {
+      //   muted: true,
+      //   language: 'en',
+      //   playbackRates: [0.7, 1.0, 1.5, 2.0],
+      //   height: '400px',
+      //   width: '600px',
+      //   controls: !previewEnded || purchased,
+      //   sources: [{
+      //     type: 'video/webm',
+      //     src: 'http://localhost:4000/watch/' + videoId,
+      //   }],
+      // },
     };
   },
   mounted() {
@@ -85,19 +117,19 @@ export default {
       currentVideo: state => state.videos.currentVideo,
     }),
     videoUrl: function () { 
-      return "http://localhost:4000/watch/" + this.videoId;
+      return 'http://localhost:4000/watch/' + this.videoId;
     },
     outputs: function () {
       return [
         {
           to: this.currentVideo.hs_address,
-          amount: 0.1,
-          currency: "EUR",
+          amount: 0.01,
+          currency: 'USD',
         },
         {
           to: this.currentVideo.creator_address,
-          amount: 0.2,
-          currency: "EUR",
+          amount: 0.02,
+          currency: 'USD',
         }
       ];
     }
@@ -113,22 +145,36 @@ export default {
       if (!this.purchased && (this.currentTime > this.previewDuration)) {
         this.$refs.player.pause();
         this.previewEnded = true;
+
+        // this.$refs.moneyButton.size.width
       }
     },
     handleVideo2Loaded() {
       if (!this.player2Loaded) {
-        this.$refs.player2.removeEventListener("canplay", this.handleVideo2Loaded);
+        this.$refs.player2.removeEventListener('canplay', this.handleVideo2Loaded);
         this.player2Loaded = true;
         this.$refs.player2.currentTime = this.$refs.player.currentTime;
         this.$refs.player2.play();
       }
     },
     handlePayment(payment) {
-      console.log({payment})
+      console.log({ payment })
       this.purchased = true;
-      this.$refs.player2.src = "http://localhost:4000/watch/" + this.videoId + '/high';;
-      this.$refs.player2.load();
-      this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
+      setTimeout(() => {
+        this.$refs.player2.src = 'http://localhost:4000/watch/' + this.videoId + '/high';
+        this.$refs.player2.load();
+        this.$refs.player2.addEventListener('canplay', this.handleVideo2Loaded);
+      })
+    },
+    hidePaywall(e) {
+      e.preventDefault();
+      this.purchased = true;
+      // this.playerOptions.sources[0].src = 'http://localhost:4000/watch/' + this.videoId + '/high';
+      setTimeout(() => {
+        this.$refs.player2.src = 'http://localhost:4000/watch/' + this.videoId + '/high';
+        this.$refs.player2.load();
+        this.$refs.player2.addEventListener('canplay', this.handleVideo2Loaded);
+      })
     },
     ...mapActions('videos', ['getOne']),
   },
@@ -147,9 +193,16 @@ export default {
     list-style: none;
     margin: 0;
     padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.5);
-    color: #4a4a4a;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
     z-index: 2;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .video-js {
+    width: 600px;
+    height: 400px;
   }
 
   .paywall {
@@ -164,6 +217,24 @@ export default {
     align-items: center;
     flex-direction: column;
     text-align: center;
+    z-index: 3;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s .75s, opacity .75s linear;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 1s linear;
+    }
+
+    .paywall-text {
+      margin-bottom: 15px;
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
+    }
   }
 }
 
