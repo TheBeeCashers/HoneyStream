@@ -1,6 +1,19 @@
 <template>
   <div>
-    <h2>Other Videos</h2>
+
+    <h2 v-if="category === 'newest'">
+      Newest Videos
+    </h2>
+    <h2 v-else-if="category === 'recommended'">
+      Recommended Videos
+    </h2>
+    <h2 v-else-if="category === 'viewed'">
+      Most Viewed
+    </h2>
+    <h2 v-else>
+      Other Videos
+    </h2>
+
     <div class="other-videos">
       <VideoThumb v-for="video in videos" 
         :key="video.id" 
@@ -21,6 +34,9 @@ export default {
     VideoThumb,
   },
   name: 'otherVideos',
+  props: {
+    category: String,
+  },
   computed: {
     ...mapState({
       videos: state => state.videos.list,

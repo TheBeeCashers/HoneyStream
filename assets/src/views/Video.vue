@@ -1,6 +1,7 @@
 <template>
   <div id="video-page">
-    <h1>{{ currentVideo.title }}</h1>
+
+    <h1>{{ currentVideo.title || 'Very Creative Title (not set)' }}</h1>
 
     <div class="video-wrapper">
       <HoneystreamVideo :videoId="currentVideo.id" />

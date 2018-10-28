@@ -5,7 +5,7 @@
     </div>
 
     <div class="icons">
-      <img src="https://www.svgrepo.com/show/12324/cloud-uploading-arrow.svg" />
+      <router-link to="/upload">Upload</router-link>
     </div>
   </div>
 </template>
@@ -38,10 +38,15 @@
   }
 
   .icons {
-    height: 20px;
+    a {
+      color: #efa348;
+      text-decoration: none;
+      font-weight: bold;
+      transition: .2s;
 
-    img {
-      height: 20px;
+      &:hover {
+        color: #efca60;
+      }
     }
   }
 }

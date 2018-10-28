@@ -30,10 +30,3 @@ export default {
 
 <style scoped lang="scss">
 </style>
-
-<!--
-buttonData={JSON.stringify({
-                  userId: user.id,
-                  postId: post.id
-                })}
-                -->
