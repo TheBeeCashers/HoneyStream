@@ -39,8 +39,9 @@
         :outputs="outputs"
         ref="moneyButton"
         label="Send some loot"
-        client-identifier="69404bf8c2d75d65dd416b377a87a1c9"
+        client-identifier="330853c971200ab083ed694b989f655f"
         button-id="1540631889774"
+        :button-data="btnData"
         @payment="handlePayment"
       />
     </div>
@@ -76,7 +77,7 @@ export default {
   name: "HoneystreamVideo",
   props: {
     videoId: Number,
-    embedded: Boolean,
+    embedded: Boolean
   },
   data() {
     return {
@@ -109,10 +110,9 @@ export default {
       purchased: state => state.videos.currentVideo.access
     }),
     videoUrl: function() {
-      if (this.purchased || this.currentVideo.paywall_type === 'preview') {
+      if (this.purchased || this.currentVideo.paywall_type === "preview") {
         return config.apiUrl + "/watch/" + this.videoId + "/high";
-      } 
-      else {
+      } else {
         return config.apiUrl + "/watch/" + this.videoId;
       }
     },
@@ -141,9 +141,9 @@ export default {
       }
     },
     checkPreviewEnded() {
-      if (this.currentVideo.paywall_type === 'preview') {
+      if (this.currentVideo.paywall_type === "preview") {
         this.currentTime = this.$refs.player.currentTime;
-        if (!this.purchased && (this.currentTime > this.previewDuration)) {
+        if (!this.purchased && this.currentTime > this.previewDuration) {
           this.$refs.player.pause();
           this.previewEnded = true;
         }
@@ -165,7 +165,7 @@ export default {
     },
     handlePayment(payment) {
       this.setPurchased(this.videoId);
-      if (this.currentVideo.paywall_type === 'quality') {
+      if (this.currentVideo.paywall_type === "quality") {
         // Pause the first player and mark the timestamp.
         this.$refs.player.pause();
         this.currentTime = this.$refs.player.currentTime;
@@ -176,8 +176,7 @@ export default {
           config.apiUrl + "/watch/" + this.videoId + "/high";
         this.$refs.player2.load();
         this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
-      }
-      else {
+      } else {
         // Continue playing where we left.
         this.$refs.player.play();
       }
