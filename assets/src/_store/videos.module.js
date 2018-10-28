@@ -21,9 +21,12 @@ const actions = {
 
     videoService.getById(id)
       .then(
-        video => commit('getOneSuccess', {id, video}),
-        error => commit('getOneFailure', {id, error}),
+        video => commit('getOneSuccess', { id, video }),
+        error => commit('getOneFailure', { id, error }),
       );
+  },
+  setPurchased({ commit }, id) {
+    commit('setPurchased', { id });
   },
 };
 
@@ -39,23 +42,26 @@ const mutations = {
   },
   // getOne
   getOneRequest(state, id) {
-    state.data = { 
+    state.data = {
       ...state.data,
       [id]: { loading: true }
     };
   },
-  getOneSuccess(state, {id, video}) {
-    state.data = { 
+  getOneSuccess(state, { id, video }) {
+    state.data = {
       ...state.data,
       [id]: video.data
     };
     state.currentVideo = video.data;
   },
-  getOneFailure(state, {id, error}) {
-    state.data = { 
+  getOneFailure(state, { id, error }) {
+    state.data = {
       ...state.data,
-      [id]: error 
+      [id]: error
     };
+  },
+  setPurchased(state, id) {
+    state.currentVideo.access = true;
   },
 };
 

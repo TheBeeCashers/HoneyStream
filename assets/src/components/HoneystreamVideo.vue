@@ -28,7 +28,6 @@
       Your browser does not support the video tag.
     </video>
 
-    <div v-if="purchased">
       <video
         width="600" 
         height="400" 
@@ -39,7 +38,6 @@
         type="video/webm">
         Your browser does not support the video tag.
       </video>
-    </div>
 
     <div :class="{ paywall: true, active: previewEnded && !purchased }">
       <div class="paywall-text">To continue watching swipe the Money Button.</div>
@@ -166,7 +164,7 @@ export default {
       }
     },
     handlePayment(payment) {
-      this.purchased = true;
+      this.setPurchased(this.videoId);
       setTimeout(() => {
         this.$refs.player2.src =
           "http://localhost:4000/watch/" + this.videoId + "/high";
@@ -176,7 +174,7 @@ export default {
     },
     hidePaywall(e) {
       e.preventDefault();
-      this.purchased = true;
+      this.setPurchased(this.videoId);
       // this.playerOptions.sources[0].src = 'http://localhost:4000/watch/' + this.videoId + '/high';
       setTimeout(() => {
         this.$refs.player2.src =
@@ -185,7 +183,7 @@ export default {
         this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
       });
     },
-    ...mapActions("videos", ["getOne"])
+    ...mapActions("videos", ["getOne", "setPurchased"])
   }
 };
 </script>
