@@ -50,7 +50,7 @@ export default {
     linkWithMoneyButton(event) {
       this.moneyButtonClient.requestAuthorization(
         "auth.user_identity:read",
-        config.apiUrl
+        config.apiUrl + "/"
       );
     },
     async authorize() {
