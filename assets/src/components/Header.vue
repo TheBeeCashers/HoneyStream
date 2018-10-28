@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import fetch from 'isomorphic-fetch'
-import Login from './Login'
+import fetch from 'isomorphic-fetch';
+import Login from './Login';
 
 export default {
-  name: 'header',
+  name: 'page-header',
   components: {
     Login,
   },
@@ -25,8 +25,8 @@ export default {
     const hsUser = localStorage.getItem('hs-user');
     const parsedUser = hsUser && JSON.parse(hsUser) || {};
     return {
-      userName: parsedUser.name || ''
-    }
+      userName: parsedUser.name || '',
+    };
   },
   async mounted() {
     const token = localStorage.getItem('mb_js_client:oauth_access_token');
@@ -35,21 +35,21 @@ export default {
       const res = await fetch('https://www.moneybutton.com/api/v1/auth/user_identity', {
         method: 'get',
         headers: {
-          'Accept': 'application/vnd.api+json',
+          Accept: 'application/vnd.api+json',
           'Content-Type': 'application/vnd.api+json',
-          'Authorization': 'Bearer ' + token,
+          Authorization: `Bearer ${token}`,
         }
       })
+      
       if (res.status >= 200 || res.status < 300) {
         if (!hsUser) {
           const user = await res.json();
           const id = user.data.attributes.id;
           const name = user.data.attributes.name;
-          localStorage.setItem('hs-user', '{ "id": "' + id + '", "name": "' + name + '" }')
-          this.userName = name
+          localStorage.setItem('hs-user', `{ "id": "${id}", "name": "${name}" }`);
+          this.userName = name;
         }
-      }
-      else {
+      } else {
         localStorage.removeItem('hs-user');
         localStorage.removeItem('mb_js_client:oauth_access_token');
         localStorage.removeItem('mb_js_client:oauth_expiration_time');
@@ -61,7 +61,7 @@ export default {
       }
     }
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

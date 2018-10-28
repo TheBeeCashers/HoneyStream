@@ -71,7 +71,7 @@ export default {
     Header,
     FilePond,
   },
-  data: function() {
+  data() {
     return { myVideo: [], myThumb: [] };
   },
   name: 'upload',
@@ -82,7 +82,7 @@ export default {
   computed: {
   },
   methods: {
-    handleFilePondInit: function() {
+    handleFilePondInit() {
       console.log('FilePond has initialized');
     },
     cancel(e) {
@@ -109,7 +109,7 @@ export default {
       font-weight: bold;
       margin: 15px 0 10px;
     }
-    
+
     input, textarea {
       padding: 10px 15px;
       font-size: 14px;

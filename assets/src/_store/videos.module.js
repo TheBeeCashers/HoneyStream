@@ -44,20 +44,20 @@ const mutations = {
   getOneRequest(state, id) {
     state.data = {
       ...state.data,
-      [id]: { loading: true }
+      [id]: { loading: true },
     };
   },
   getOneSuccess(state, { id, video }) {
     state.data = {
       ...state.data,
-      [id]: video.data
+      [id]: video.data,
     };
     state.currentVideo = video.data;
   },
   getOneFailure(state, { id, error }) {
     state.data = {
       ...state.data,
-      [id]: error
+      [id]: error,
     };
   },
   setPurchased(state, id) {

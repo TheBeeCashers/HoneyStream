@@ -7,13 +7,13 @@
       <li>creator_address: {{currentVideo.creator_address}}</li>
       <li>paywall_type: {{currentVideo.paywall_type}}</li>
       <li>purchased: {{currentVideo.access}}</li>
-    </ul>   
+    </ul>
 
-    <video 
-      width="600" 
-      height="400" 
-      :controls="!previewEnded || purchased" 
-      ref="player" 
+    <video
+      width="600"
+      height="400"
+      :controls="!previewEnded || purchased"
+      ref="player"
       id="video"
       :class="{active: !player2Loaded, videoPlayer: true}"
       :src="videoUrl" type="video/webm"
@@ -22,17 +22,17 @@
     </video>
 
     <video
-      width="600" 
-      height="400" 
-      :controls="!previewEnded || purchased" 
-      ref="player2" 
+      width="600"
+      height="400"
+      :controls="!previewEnded || purchased"
+      ref="player2"
       id="video2"
       :class="{active: player2Loaded, videoPlayer: true}"
       type="video/webm">
       Your browser does not support the video tag.
     </video>
 
-    <div v-if="currentVideo.paywall_type === 'preview'" 
+    <div v-if="currentVideo.paywall_type === 'preview'"
       :class="{ paywall: true, active: previewEnded && !purchased }">
       <div class="paywall-text">To continue watching swipe the Money Button.</div>
       <MoneyButton
@@ -63,21 +63,22 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { mapState, mapActions } from "vuex";
-import MoneyButton from "vue-money-button";
-import config from "../config";
+import Vue from 'vue';
+import { mapState, mapActions } from 'vuex';
+import MoneyButton from 'vue-money-button';
+import config from '../config';
+
 
 Vue.use(MoneyButton);
 
 export default {
   components: {
-    MoneyButton
+    MoneyButton,
   },
-  name: "HoneystreamVideo",
+  name: 'HoneystreamVideo',
   props: {
     videoId: Number,
-    embedded: Boolean
+    embedded: String,
   },
   data() {
     return {
@@ -85,7 +86,7 @@ export default {
       isPreview: true,
       currentTime: 0,
       previewEnded: false,
-      player2Loaded: false
+      player2Loaded: false,
     };
   },
   mounted() {
@@ -95,44 +96,43 @@ export default {
   },
   watch: {
     // whenever video changes, this function will run
-    videoId: function(newId, oldId) {
+    videoId(newId, oldId) {
       this.$refs.player.pause();
       this.previewEnded = false;
       this.$refs.player2.pause();
-      this.$refs.player2.src = "";
+      this.$refs.player2.src = '';
       this.player2Loaded = false;
       this.getOne(this.newId);
-    }
+    },
   },
   computed: {
     ...mapState({
       currentVideo: state => state.videos.currentVideo,
-      purchased: state => state.videos.currentVideo.access
+      purchased: state => state.videos.currentVideo.access,
     }),
-    videoUrl: function() {
-      if (this.purchased || this.currentVideo.paywall_type === "preview") {
-        return config.apiUrl + "/watch/" + this.videoId + "/high";
-      } else {
-        return config.apiUrl + "/watch/" + this.videoId;
+    videoUrl() {
+      if (this.purchased || this.currentVideo.paywall_type === 'preview') {
+        return `${config.apiUrl}/watch/${this.videoId}/high`;
       }
+      return `${config.apiUrl}/watch/${this.videoId}`;
     },
-    outputs: function() {
+    outputs() {
       return [
         {
           to: this.currentVideo.hs_address,
           amount: 0.01,
-          currency: "USD"
+          currency: 'USD',
         },
         {
           to: this.currentVideo.creator_address,
           amount: 0.02,
-          currency: "USD"
-        }
+          currency: 'USD',
+        },
       ];
     },
-    btnData: function() {
+    btnData() {
       return JSON.stringify({ video_id: this.videoId });
-    }
+    },
   },
   methods: {
     onPlay(event) {
@@ -141,7 +141,7 @@ export default {
       }
     },
     checkPreviewEnded() {
-      if (this.currentVideo.paywall_type === "preview") {
+      if (this.currentVideo.paywall_type === 'preview') {
         this.currentTime = this.$refs.player.currentTime;
         if (!this.purchased && this.currentTime > this.previewDuration) {
           this.$refs.player.pause();
@@ -152,8 +152,8 @@ export default {
     handleVideo2Loaded() {
       if (!this.player2Loaded) {
         this.$refs.player2.removeEventListener(
-          "canplay",
-          this.handleVideo2Loaded
+          'canplay',
+          this.handleVideo2Loaded,
         );
         this.player2Loaded = true;
 
@@ -165,7 +165,7 @@ export default {
     },
     handlePayment(payment) {
       this.setPurchased(this.videoId);
-      if (this.currentVideo.paywall_type === "quality") {
+      if (this.currentVideo.paywall_type === 'quality') {
         // Pause the first player and mark the timestamp.
         this.$refs.player.pause();
         this.currentTime = this.$refs.player.currentTime;
@@ -173,16 +173,16 @@ export default {
         // Load the new video in a new player and set-up an
         // event listener to check when the video is loaded.
         this.$refs.player2.src =
-          config.apiUrl + "/watch/" + this.videoId + "/high";
+          `${config.apiUrl}/watch/${this.videoId}/high`;
         this.$refs.player2.load();
-        this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
+        this.$refs.player2.addEventListener('canplay', this.handleVideo2Loaded);
       } else {
         // Continue playing where we left.
         this.$refs.player.play();
       }
     },
-    ...mapActions("videos", ["getOne", "setPurchased"])
-  }
+    ...mapActions('videos', ['getOne', 'setPurchased']),
+  },
 };
 </script>
 

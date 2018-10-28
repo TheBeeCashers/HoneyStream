@@ -9,17 +9,17 @@ Vue.use(Router);
 
 export const router = new Router({
   base: process.env.BASE_URL,
-  mode: "history",
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'home',
       component: Browse,
     },
-    { 
+    {
       path: '/video/:video_id',
       name: 'video',
-      component: Home, 
+      component: Home,
       props: true,
     },
     {

@@ -1,6 +1,6 @@
 <template>
   <div id="embed">
-    <HoneystreamVideo :videoId="videoId" embedded="true" />
+    <HoneystreamVideo :videoId=videoId embedded=true />
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
 
 export default {
-  name: 'embed',
+  name: 'embedded-video',
   components: {
     HoneystreamVideo,
   },
@@ -21,8 +21,8 @@ export default {
   created() {
     const last = window.location.pathname.split('/').slice(-1);
     this.videoId = parseInt(last, 10);
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">

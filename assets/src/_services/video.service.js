@@ -18,10 +18,10 @@ function getAll() {
 function getById(id) {
   if (!id) {
     return new Promise((res, rej) => {
-      rej()
-    })
+      rej();
+    });
   }
-  
+
   const requestOptions = {
     method: 'GET',
     headers: authHeader(),

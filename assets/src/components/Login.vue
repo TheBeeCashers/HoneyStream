@@ -15,15 +15,13 @@ export default {
   name: 'user',
   props: {},
   data() {
-    return {}
+    return {};
     // return {
     //   isLoggedIn: false,
     // }
   },
   mounted() {
-    this.moneyButtonClient = new MoneyButtonClient(
-      '66095b051e6b3363242ee35756c7e866'
-    );
+    this.moneyButtonClient = new MoneyButtonClient('66095b051e6b3363242ee35756c7e866');
     if (
       !this.isLoggedIn &&
       this.$route.query.code !== undefined &&
@@ -33,16 +31,16 @@ export default {
     }
   },
   computed: {
-    isLoggedIn: function() {
+    isLoggedIn() {
       return !!this.$cookie.get('mbuid');
-    }
+    },
   },
   methods: {
     linkWithMoneyButton(event) {
-      event.preventDefault()
+      event.preventDefault();
       this.moneyButtonClient.requestAuthorization(
         'auth.user_identity:read',
-        config.apiUrl + '/'
+        `${config.apiUrl}/`,
       );
     },
     async authorize() {
@@ -50,8 +48,8 @@ export default {
       const { id: moneyButtonId } = await this.moneyButtonClient.getIdentity();
       this.$cookie.set('mbuid', moneyButtonId, 1);
       window.location.href = '/'; // TODO
-    }
-  }
+    },
+  },
 };
 </script>
 

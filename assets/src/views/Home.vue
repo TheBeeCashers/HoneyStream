@@ -1,27 +1,25 @@
 <template>
   <div id="home">
     <Header />
-
-    <Video :videoId="video_id" />
-    
+    <Video :videoId=video_id />
     <Footer />
   </div>
 </template>
 
 <script>
-import Video from "@/views/Video.vue";
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
+import Video from '@/views/Video.vue';
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
-const uuidv4 = require("uuid/v4");
+const uuidv4 = require('uuid/v4');
 
-if (!localStorage.getItem("hs-uuid")) {
-  localStorage.setItem("hs-uuid", uuidv4());
+if (!localStorage.getItem('hs-uuid')) {
+  localStorage.setItem('hs-uuid', uuidv4());
 }
 
 export default {
-  name: "home",
-  props: ['video_id'], 
+  name: 'home',
+  props: ['video_id'],
   components: {
     Header,
     Video,

@@ -14,8 +14,8 @@
     </h2>
 
     <div class="other-videos">
-      <VideoThumb v-for="video in videos" 
-        :key="video.id" 
+      <VideoThumb v-for="video in videos"
+        :key="video.id"
         v-bind:title="video.title"
         v-bind:id="video.id"
         v-bind:thumbnailUrl="video.thumbnail_url"
@@ -48,7 +48,7 @@ export default {
     // Load all videos initially.
     this.getAll();
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

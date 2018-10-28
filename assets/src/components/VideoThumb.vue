@@ -16,9 +16,9 @@ export default {
   },
   methods: {
     loadVideo(e) {
-      e.preventDefault()
-      this.$router.push('/video/' + this.id);
-    }
+      e.preventDefault();
+      this.$router.push(`/video/${this.id}`);
+    },
   },
 };
 </script>
@@ -28,7 +28,7 @@ export default {
   width: 32%;
   color: #4a4a4a;
   text-decoration: none;
-  
+
   img {
     width: 100%;
   }

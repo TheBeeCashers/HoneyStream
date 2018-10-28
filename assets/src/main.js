@@ -6,13 +6,15 @@ import store from './store';
 
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
-
-new Vue({
-  store,
-  render: h => h(Embed),
-}).$mount('#embed');
+if (document.getElementById('app')) {
+  new Vue({
+    router,
+    store,
+    render: h => h(App),
+  }).$mount('#app');
+} else if (document.getElementById('embed')) {
+  new Vue({
+    store,
+    render: h => h(Embed),
+  }).$mount('#embed');
+}

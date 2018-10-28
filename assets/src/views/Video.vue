@@ -4,8 +4,8 @@
     <h1>{{ currentVideo.title || 'Very Creative Title (not set)' }}</h1>
 
     <div class="video-wrapper">
-      <HoneystreamVideo :videoId="currentVideo.id" embedded="false" />
-        
+      <HoneystreamVideo :videoId=currentVideo.id embedded=false />
+
       <div class="video-sidebar">
         <div>
           <h3>Uploaded by</h3>
@@ -20,6 +20,8 @@
 
           <h4>Description</h4>
           <p class="video-description" v-html="currentVideo.description" />
+
+          <EmbedCode :videoId=currentVideo.id />
         </div>
       </div>
     </div>
@@ -34,28 +36,26 @@
 import { mapState, mapActions } from 'vuex';
 import OtherVideos from '@/components/OtherVideos.vue';
 import HoneystreamVideo from '@/components/HoneystreamVideo.vue';
-import Footer from "@/components/Footer.vue";
+import Footer from '@/components/Footer.vue';
+import EmbedCode from '@/components/EmbedCode';
 
 export default {
   components: {
     OtherVideos,
     HoneystreamVideo,
     Footer,
+    EmbedCode,
   },
   name: 'Video',
   props: {
-    videoId: Number,
+    videoId: String,
     title: String,
-  },
-  data() {
-    return {
-    };
   },
   watch: {
     // whenever video changes, this function will run
-    videoId: function(newId, oldId) {
+    videoId(newId, oldId) {
       this.getOne(this.videoId);
-    }
+    },
   },
   mounted() {
     this.getOne(this.videoId);
@@ -98,7 +98,7 @@ export default {
       flex: 1;
       background: #f8f8f8;
       padding: 20px;
-      
+
       h3 {
         margin-top: 0;
       }

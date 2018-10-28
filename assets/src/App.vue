@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Sidebar />
-    
     <router-view />
   </div>
 </template>
@@ -13,8 +12,8 @@ export default {
   name: 'app',
   components: {
     Sidebar,
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
