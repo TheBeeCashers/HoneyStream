@@ -1,7 +1,8 @@
 <template>
   <div id="header">
     <div class="search-box">
-      <input type="text" class="search-field" placeholder="Search..." />
+      <!-- <input type="text" class="search-field" placeholder="Search..." /> -->
+      <img src="/img/logo.png" class="logo" />
     </div>
 
     <div class="icons">
@@ -14,7 +15,7 @@
 
 <script>
 import fetch from 'isomorphic-fetch';
-import Login from './Login';
+import Login from '@/components/Login';
 
 export default {
   name: 'page-header',
@@ -66,7 +67,7 @@ export default {
 
 <style scoped lang="scss">
 #header {
-  padding: 10px 30px 10px 20px;
+  padding: 0 30px 0 20px;
   border-bottom: solid 1px #ececec;
   display: flex;
   flex-direction: row;
@@ -75,6 +76,12 @@ export default {
   .search-box {
     flex: 1;
     text-align: center;
+    margin-top: 10px;
+    margin-bottom: -11px;
+
+    .logo {
+      height: 40px;
+    }
 
     .search-field {
       padding: 10px;
