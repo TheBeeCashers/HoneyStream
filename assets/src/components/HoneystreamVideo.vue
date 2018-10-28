@@ -157,6 +157,10 @@ export default {
         );
         this.player2Loaded = true;
 
+        this.$refs.player.pause();
+        this.$refs.player.src = "";
+        this.$refs.player.load = "";
+        
         // When the second player is loaded set the previously
         // market timestamp and continue playing.
         this.$refs.player2.currentTime = this.currentTime;
@@ -167,7 +171,7 @@ export default {
       this.setPurchased(this.videoId);
       if (this.currentVideo.paywall_type === 'quality') {
         // Pause the first player and mark the timestamp.
-        this.$refs.player.pause();
+        
         this.currentTime = this.$refs.player.currentTime;
 
         // Load the new video in a new player and set-up an
