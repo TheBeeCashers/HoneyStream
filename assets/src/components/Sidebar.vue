@@ -7,8 +7,8 @@
     <ul class="main-menu">
       <li><router-link to="/">Home</router-link></li>
       <li class="separator" />
-      <li><router-link to="/library">Your Videos</router-link></li>
-      <li><router-link to="/purchases">Your Purchases</router-link></li>
+      <li><router-link to="/library">My Uploads</router-link></li>
+      <li><router-link to="/purchases">My Purchases</router-link></li>
       <li><router-link to="/user">Settings</router-link></li>
     </ul>
   </div>

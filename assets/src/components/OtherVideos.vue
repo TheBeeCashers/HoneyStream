@@ -1,9 +1,8 @@
 <template>
-  <div>
-
-    <h2 v-if="category === 'newest'">
+  <div id="other-videos">
+    <h1 v-if="category === 'newest'">
       Newest Videos
-    </h2>
+    </h1>
     <h2 v-else-if="category === 'recommended'">
       Recommended Videos
     </h2>
@@ -53,9 +52,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.other-videos {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+#other-videos {
+  h1, h2 {
+    margin-bottom: 10px;
+  }
+
+  .other-videos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 </style>

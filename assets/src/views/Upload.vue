@@ -47,8 +47,10 @@
           />
         </div>
 
-        <input type="button" value="Upload" class="upload-button" />
-        <input type="button" value="Cancel" class="cancel-button" @click="cancel" />
+        <div class="buttons">
+          <input type="button" value="Upload" class="upload-button" />
+          <input type="button" value="Cancel" class="cancel-button" @click="cancel" />
+        </div>
       </form>
     </div>
   </div>
@@ -85,7 +87,7 @@ export default {
     },
     cancel(e) {
       e.preventDefault()
-      router.push('browse')
+      router.push('/')
     },
   },
 };
@@ -132,30 +134,38 @@ export default {
       max-height: 20em;
     }
 
-    .upload-button, .cancel-button {
-      border-radius: 4px;
-      border: solid 1px #efca60;
-      background-color: #efca60;
-      padding: 10px 20px;
-      transition: background .2s;
-      width: auto;
+    .buttons {
+      margin-top: 20px;
 
-      &:hover {
-        background-color: #F8D980;
-        border-color: #F8D980;
-        cursor: pointer;
+      .upload-button, .cancel-button {
+        border-radius: 4px;
+        border: solid 1px #e67e22;
+        background-color: #e67e22;
+        padding: 10px 20px;
+        transition: background .2s;
+        width: auto;
+
+        &:hover {
+          background-color: #d35400;
+          border-color: #d35400;
+          cursor: pointer;
+        }
       }
-    }
 
-    .cancel-button {
-      background-color: white;
-      border: solid 1px #ddd;
-      margin-left: 10px;
+      .upload-button {
+        color: white;
+      }
 
-      &:hover {
-        background-color: #fafafa;
-        border-color: #ccc;
-        cursor: pointer;
+      .cancel-button {
+        background-color: white;
+        border: solid 1px #ddd;
+        margin-left: 10px;
+
+        &:hover {
+          background-color: #fafafa;
+          border-color: #ccc;
+          cursor: pointer;
+        }
       }
     }
   }
