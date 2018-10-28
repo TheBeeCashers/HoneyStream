@@ -80,11 +80,7 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD
-      previewDuration: 5,
-=======
       previewDuration: 10,
->>>>>>> Standalone video page with autoplay.
       isPreview: true,
       currentTime: 0,
       previewEnded: false,
