@@ -6,8 +6,8 @@ defmodule HoneystreamWeb.VideoView do
     %{data: render_many(videos, VideoView, "video.json")}
   end
 
-  def render("show.json", %{video: video}) do
-    %{data: render_one(video, VideoView, "video.json")}
+  def render("show.json", %{video: video, access: has_access}) do
+    %{data: Map.put(render_one(video, VideoView, "video.json"), :access, has_access)}
   end
 
   def render("payment.json", %{success: payment_done}) do

@@ -23,8 +23,16 @@ defmodule HoneystreamWeb.VideoController do
   end
 
   def show(conn, %{"id" => id}) do
+    conn = Plug.Conn.fetch_cookies(conn)
     video = Videos.get_video!(id)
-    render(conn, "show.json", video: video)
+    has_access = case Map.get(conn.req_cookies, "mbuid") do
+      nil -> false
+      uid -> case Videos.get_payment(id, uid) do
+        nil -> false
+        video -> true
+      end
+    end
+    render(conn, "show.json", video: video, access: has_access)
   end
 
   def update(conn, %{"id" => id, "video" => video_params}) do
