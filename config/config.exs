@@ -9,7 +9,7 @@ use Mix.Config
 config :honeystream,
   ecto_repos: [Honeystream.Repo],
   webhook_secret: "ab4158b874b9a273923810a68b7f0ae8",
-  address: "371"
+  address: "944"
 
 # Configures the endpoint
 config :honeystream, HoneystreamWeb.Endpoint,

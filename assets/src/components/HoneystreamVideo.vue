@@ -48,8 +48,9 @@
         :outputs="outputs"
         ref="moneyButton"
         label="Send some loot"
-        client-identifier="69404bf8c2d75d65dd416b377a87a1c9"
+        client-identifier="330853c971200ab083ed694b989f655f"
         button-id="1540631889774"
+        :button-data="btnData"
         @payment="handlePayment"
       />
     </div>
@@ -60,7 +61,7 @@
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import MoneyButton from "vue-money-button";
-import config from '../config';
+import config from "../config";
 
 Vue.use(MoneyButton);
 
@@ -120,6 +121,9 @@ export default {
           currency: "USD"
         }
       ];
+    },
+    btnData: function() {
+      return JSON.stringify({ video_id: this.videoId });
     }
   },
   methods: {
