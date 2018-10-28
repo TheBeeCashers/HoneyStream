@@ -1,20 +1,12 @@
 <template>
   <div class="video-container">
-    <!-- <video-player 
-      class="video-player-box"
-      ref="videoPlayer"
-      height="400"
-      width="600"
-      :options="playerOptions"
-      :playsinline="true"
-      customEventName="customstatechangedeventname"
-      @ready="playerReadied">
-    </video-player> -->
-    <ul class="video-specs">
+    <ul v-if="0" class="video-specs">
       <li>Preview duration: {{previewDuration}}s</li>
       <li>Current time {{currentTime}}s</li>
       <li>hs_address: {{currentVideo.hs_address}}</li>
       <li>creator_address: {{currentVideo.creator_address}}</li>
+      <li>paywall_type: {{currentVideo.paywall_type}}</li>
+      <li>purchased: {{currentVideo.access}}</li>
     </ul>   
 
     <video 
@@ -28,22 +20,33 @@
       Your browser does not support the video tag.
     </video>
 
-      <video
-        width="600" 
-        height="400" 
-        :controls="!previewEnded || purchased" 
-        ref="player2" 
-        id="video2"
-        :class="{active: player2Loaded, videoPlayer: true}"
-        type="video/webm">
-        Your browser does not support the video tag.
-      </video>
+    <video
+      width="600" 
+      height="400" 
+      :controls="!previewEnded || purchased" 
+      ref="player2" 
+      id="video2"
+      :class="{active: player2Loaded, videoPlayer: true}"
+      type="video/webm">
+      Your browser does not support the video tag.
+    </video>
 
-    <div :class="{ paywall: true, active: previewEnded && !purchased }">
+    <div v-if="currentVideo.paywall_type === 'preview'" 
+      :class="{ paywall: true, active: previewEnded && !purchased }">
       <div class="paywall-text">To continue watching swipe the Money Button.</div>
+      <MoneyButton
+        :outputs="outputs"
+        ref="moneyButton"
+        label="Send some loot"
+        client-identifier="69404bf8c2d75d65dd416b377a87a1c9"
+        button-id="1540631889774"
+        @payment="handlePayment"
+      />
+    </div>
 
-      <!-- <input type="submit" @click="hidePaywall" value="hide this shit" /><br/> -->
-
+    <div v-if="currentVideo.paywall_type === 'quality'"
+      :class="{ miniPaywall: true, active: !purchased && currentVideo.paywall_type === 'quality' }">
+      <div class="paywall-text">Swipe the Money Button to watch in HQ.</div>
       <MoneyButton
         :outputs="outputs"
         ref="moneyButton"
@@ -88,10 +91,13 @@ export default {
     this.getOne(this.videoId);
   },
   watch: {
-    // whenever question changes, this function will run
+    // whenever video changes, this function will run
     videoId: function(newId, oldId) {
       this.$refs.player.pause();
       this.previewEnded = false;
+      this.$refs.player2.pause();
+      this.$refs.player2.src = "";
+      this.player2Loaded = false;
       this.getOne(this.newId);
     }
   },
@@ -100,11 +106,11 @@ export default {
       currentVideo: state => state.videos.currentVideo,
       purchased: state => state.videos.currentVideo.access
     }),
-
     videoUrl: function() {
-      if (this.purchased) {
+      if (this.purchased || this.currentVideo.paywall_type === 'preview') {
         return config.apiUrl + "/watch/" + this.videoId + "/high";
-      } else {
+      } 
+      else {
         return config.apiUrl + "/watch/" + this.videoId;
       }
     },
@@ -133,12 +139,12 @@ export default {
       }
     },
     checkPreviewEnded() {
-      this.currentTime = this.$refs.player.currentTime;
-      if (!this.purchased && this.currentTime > this.previewDuration) {
-        this.$refs.player.pause();
-        this.previewEnded = true;
-
-        // this.$refs.moneyButton.size.width
+      if (this.currentVideo.paywall_type === 'preview') {
+        this.currentTime = this.$refs.player.currentTime;
+        if (!this.purchased && (this.currentTime > this.previewDuration)) {
+          this.$refs.player.pause();
+          this.previewEnded = true;
+        }
       }
     },
     handleVideo2Loaded() {
@@ -148,28 +154,31 @@ export default {
           this.handleVideo2Loaded
         );
         this.player2Loaded = true;
-        this.$refs.player2.currentTime = this.$refs.player.currentTime;
+
+        // When the second player is loaded set the previously
+        // market timestamp and continue playing.
+        this.$refs.player2.currentTime = this.currentTime;
         this.$refs.player2.play();
       }
     },
     handlePayment(payment) {
       this.setPurchased(this.videoId);
-      setTimeout(() => {
+      if (this.currentVideo.paywall_type === 'quality') {
+        // Pause the first player and mark the timestamp.
+        this.$refs.player.pause();
+        this.currentTime = this.$refs.player.currentTime;
+
+        // Load the new video in a new player and set-up an
+        // event listener to check when the video is loaded.
         this.$refs.player2.src =
           config.apiUrl + "/watch/" + this.videoId + "/high";
         this.$refs.player2.load();
         this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
-      });
-    },
-    hidePaywall(e) {
-      e.preventDefault();
-      this.setPurchased(this.videoId);
-      setTimeout(() => {
-        this.$refs.player2.src =
-          config.apiUrl + "/watch/" + this.videoId + "/high";
-        this.$refs.player2.load();
-        this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
-      });
+      }
+      else {
+        // Continue playing where we left.
+        this.$refs.player.play();
+      }
     },
     ...mapActions("videos", ["getOne", "setPurchased"])
   }
@@ -230,6 +239,39 @@ export default {
       color: white;
       font-weight: bold;
     }
+  }
+}
+
+.miniPaywall {
+  position: absolute;
+  background-color: rgba(55, 56, 48, 0.8);
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 3;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.75s, opacity 0.75s linear;
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s linear;
+  }
+
+  .paywall-text {
+    display: inline-block;
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 10px;
   }
 }
 
