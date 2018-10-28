@@ -4,7 +4,7 @@
     <h1>{{ currentVideo.title || 'Very Creative Title (not set)' }}</h1>
 
     <div class="video-wrapper">
-      <HoneystreamVideo :videoId="currentVideo.id" />
+      <HoneystreamVideo :videoId="currentVideo.id" embedded="false" />
         
       <div class="video-sidebar">
         <div>
@@ -48,6 +48,12 @@ export default {
   data() {
     return {
     };
+  },
+  watch: {
+    // whenever video changes, this function will run
+    videoId: function(newId, oldId) {
+      this.getOne(this.videoId);
+    }
   },
   mounted() {
     this.getOne(this.videoId);

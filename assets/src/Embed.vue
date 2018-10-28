@@ -1,6 +1,6 @@
 <template>
   <div id="embed">
-    <HoneystreamVideo videoId=1 />
+    <HoneystreamVideo :videoId="videoId" embedded="true" />
   </div>
 </template>
 
@@ -12,6 +12,15 @@ export default {
   name: 'embed',
   components: {
     HoneystreamVideo,
+  },
+  data() {
+    return {
+      videoId: 1,
+    };
+  },
+  created() {
+    const last = window.location.pathname.split('/').slice(-1);
+    this.videoId = parseInt(last, 10);
   }
 }
 </script>

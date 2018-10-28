@@ -1,16 +1,13 @@
 <template>
   <div id="home">
     <Header />
-
-    <Video videoId=1 />
+    <Video :videoId="video_id" />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
 import Video from "@/views/Video.vue";
 import Header from "@/components/Header.vue";
-import VideoThumb from "@/components/VideoThumb.vue";
 
 const uuidv4 = require("uuid/v4");
 
@@ -20,23 +17,11 @@ if (!localStorage.getItem("hs-uuid")) {
 
 export default {
   name: "home",
+  props: ['video_id'], 
   components: {
     Header,
     Video,
-    VideoThumb
   },
-  computed: {
-    ...mapState({
-      videos: state => state.videos.list
-    })
-  },
-  methods: {
-    ...mapActions("videos", ["getAll"])
-  },
-  mounted() {
-    // Load all videos initially.
-    this.getAll();
-  }
 };
 </script>
 

@@ -15,9 +15,9 @@
       :controls="!previewEnded || purchased" 
       ref="player" 
       id="video"
-      :class="{active: !player2Loaded, videoPlayer: true, mejs__player: true }"
+      :class="{active: !player2Loaded, videoPlayer: true}"
       :src="videoUrl" type="video/webm"
-      :poster="currentVideo.thumbnail_url">
+      :autoplay="{autoplay: !embedded}">
       Your browser does not support the video tag.
     </video>
 
@@ -75,11 +75,16 @@ export default {
   },
   name: "HoneystreamVideo",
   props: {
-    videoId: Number
+    videoId: Number,
+    embedded: Boolean,
   },
   data() {
     return {
+<<<<<<< HEAD
       previewDuration: 5,
+=======
+      previewDuration: 10,
+>>>>>>> Standalone video page with autoplay.
       isPreview: true,
       currentTime: 0,
       previewEnded: false,

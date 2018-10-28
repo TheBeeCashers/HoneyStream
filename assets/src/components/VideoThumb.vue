@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
 export default {
   name: 'VideoThumb',
   props: {
@@ -17,10 +15,8 @@ export default {
     thumbnailUrl: String,
   },
   methods: {
-    ...mapActions('videos', ['getOne', 'setCurrent']),
-    loadVideo(e) {
-      e.preventDefault();
-      this.getOne(this.id);
+    loadVideo() {
+      this.$router.push('/video/' + this.id);
     }
   },
 };

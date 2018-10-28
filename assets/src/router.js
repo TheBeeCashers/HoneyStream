@@ -14,17 +14,18 @@ export const router = new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: Browse,
+    },
+    { 
+      path: '/video/:video_id',
+      name: 'video',
+      component: Home, 
+      props: true,
     },
     {
       path: '/user',
       name: 'user',
       component: User,
-    },
-    {
-      path: '/browse',
-      name: 'browse',
-      component: Browse,
     },
     {
       path: '/upload',
