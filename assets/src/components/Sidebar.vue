@@ -56,6 +56,7 @@ export default {
       await this.moneyButtonClient.handleAuthorizationResponse();
       const { id: moneyButtonId } = await this.moneyButtonClient.getIdentity();
       this.$cookie.set("mbuid", moneyButtonId, 1);
+      window.location.href = "/"; // TODO
     }
   }
 };

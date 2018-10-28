@@ -59,9 +59,9 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { mapState, mapActions } from 'vuex';
-import MoneyButton from 'vue-money-button';
+import Vue from "vue";
+import { mapState, mapActions } from "vuex";
+import MoneyButton from "vue-money-button";
 // import { videoPlayer } from 'vue-video-player'
 
 // import 'video.js/dist/video-js.css'
@@ -70,21 +70,20 @@ Vue.use(MoneyButton);
 
 export default {
   components: {
-    MoneyButton,
+    MoneyButton
     // videoPlayer,
   },
-  name: 'HoneystreamVideo',
+  name: "HoneystreamVideo",
   props: {
-    videoId: Number,
+    videoId: Number
   },
   data() {
     return {
-      previewDuration: 5,
+      previewDuration: 15,
       isPreview: true,
       currentTime: 0,
       previewEnded: false,
-      purchased: false,
-      player2Loaded: false,
+      player2Loaded: false
       // playerOptions: {
       //   muted: true,
       //   language: 'en',
@@ -106,7 +105,7 @@ export default {
   },
   watch: {
     // whenever question changes, this function will run
-    videoId: function (newId, oldId) {
+    videoId: function(newId, oldId) {
       this.$refs.player.pause();
       this.previewEnded = false;
       this.getOne(this.newId);
@@ -115,21 +114,27 @@ export default {
   computed: {
     ...mapState({
       currentVideo: state => state.videos.currentVideo,
+      purchased: state => state.videos.currentVideo.access
     }),
-    videoUrl: function () { 
-      return 'http://localhost:4000/watch/' + this.videoId;
+
+    videoUrl: function() {
+      if (this.purchased) {
+        return "http://localhost:4000/watch/" + this.videoId + "/high";
+      } else {
+        return "http://localhost:4000/watch/" + this.videoId;
+      }
     },
-    outputs: function () {
+    outputs: function() {
       return [
         {
           to: this.currentVideo.hs_address,
           amount: 0.01,
-          currency: 'USD',
+          currency: "USD"
         },
         {
           to: this.currentVideo.creator_address,
           amount: 0.02,
-          currency: 'USD',
+          currency: "USD"
         }
       ];
     }
@@ -142,7 +147,7 @@ export default {
     },
     checkPreviewEnded() {
       this.currentTime = this.$refs.player.currentTime;
-      if (!this.purchased && (this.currentTime > this.previewDuration)) {
+      if (!this.purchased && this.currentTime > this.previewDuration) {
         this.$refs.player.pause();
         this.previewEnded = true;
 
@@ -151,33 +156,37 @@ export default {
     },
     handleVideo2Loaded() {
       if (!this.player2Loaded) {
-        this.$refs.player2.removeEventListener('canplay', this.handleVideo2Loaded);
+        this.$refs.player2.removeEventListener(
+          "canplay",
+          this.handleVideo2Loaded
+        );
         this.player2Loaded = true;
         this.$refs.player2.currentTime = this.$refs.player.currentTime;
         this.$refs.player2.play();
       }
     },
     handlePayment(payment) {
-      console.log({ payment })
       this.purchased = true;
       setTimeout(() => {
-        this.$refs.player2.src = 'http://localhost:4000/watch/' + this.videoId + '/high';
+        this.$refs.player2.src =
+          "http://localhost:4000/watch/" + this.videoId + "/high";
         this.$refs.player2.load();
-        this.$refs.player2.addEventListener('canplay', this.handleVideo2Loaded);
-      })
+        this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
+      });
     },
     hidePaywall(e) {
       e.preventDefault();
       this.purchased = true;
       // this.playerOptions.sources[0].src = 'http://localhost:4000/watch/' + this.videoId + '/high';
       setTimeout(() => {
-        this.$refs.player2.src = 'http://localhost:4000/watch/' + this.videoId + '/high';
+        this.$refs.player2.src =
+          "http://localhost:4000/watch/" + this.videoId + "/high";
         this.$refs.player2.load();
-        this.$refs.player2.addEventListener('canplay', this.handleVideo2Loaded);
-      })
+        this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
+      });
     },
-    ...mapActions('videos', ['getOne']),
-  },
+    ...mapActions("videos", ["getOne"])
+  }
 };
 </script>
 
@@ -221,7 +230,7 @@ export default {
 
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s .75s, opacity .75s linear;
+    transition: visibility 0s 0.75s, opacity 0.75s linear;
 
     &.active {
       visibility: visible;
