@@ -67,9 +67,8 @@ defmodule HoneystreamWeb.VideoController do
 
   def webhook_payment(conn, %{"payment" => payment, "secret" => @webhook_secret}) do
     {:ok, button_data} = Poison.decode(payment["buttonData"])
-    {video_id, _} = Integer.parse(button_data["video_id"])
     {:ok, raw} = Poison.encode(payment)
-    Videos.upsert_payment(video_id, %{
+    Videos.upsert_payment(button_data["video_id"], %{
       user: payment["userId"],
       button_id: payment["buttonId"],
       status: payment["status"],
