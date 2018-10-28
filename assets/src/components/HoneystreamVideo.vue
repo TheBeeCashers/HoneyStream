@@ -15,8 +15,9 @@
       :controls="!previewEnded || purchased" 
       ref="player" 
       id="video"
-      :class="{active: !player2Loaded, videoPlayer: true}"
-      :src="videoUrl" type="video/webm">
+      :class="{active: !player2Loaded, videoPlayer: true, mejs__player: true }"
+      :src="videoUrl" type="video/webm"
+      :poster="currentVideo.thumbnail_url">
       Your browser does not support the video tag.
     </video>
 
@@ -78,7 +79,7 @@ export default {
   },
   data() {
     return {
-      previewDuration: 15,
+      previewDuration: 5,
       isPreview: true,
       currentTime: 0,
       previewEnded: false,

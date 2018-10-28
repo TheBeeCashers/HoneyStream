@@ -1,5 +1,7 @@
 <template>
   <div id="home">
+    <Header />
+
     <Video videoId=1 />
   </div>
 </template>
