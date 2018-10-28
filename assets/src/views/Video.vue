@@ -3,7 +3,7 @@
     <h1>{{ currentVideo.title }}</h1>
 
     <div class="video-wrapper">
-      <HoneystreamVideo :videoId="videoId" />
+      <HoneystreamVideo :videoId="currentVideo.id" />
         
       <div class="video-sidebar">
         <div>
@@ -18,7 +18,7 @@
           </div>
 
           <h4>Description</h4>
-          <p>{{currentVideo.description}}</p>
+          <p v-html="currentVideo.description"></p>
         </div>
       </div>
     </div>

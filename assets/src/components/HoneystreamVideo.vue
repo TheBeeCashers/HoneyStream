@@ -65,7 +65,6 @@ export default {
       previewEnded: false,
       purchased: false,
       player2Loaded: false,
-      videoUrl: "http://localhost:4000/watch/" + this.videoId,
     };
   },
   mounted() {
@@ -73,10 +72,21 @@ export default {
     this.$refs.player.onplay = this.onPlay;
     this.getOne(this.videoId);
   },
+  watch: {
+    // whenever question changes, this function will run
+    videoId: function (newId, oldId) {
+      this.$refs.player.pause();
+      this.previewEnded = false;
+      this.getOne(this.newId);
+    }
+  },
   computed: {
     ...mapState({
       currentVideo: state => state.videos.currentVideo,
     }),
+    videoUrl: function () { 
+      return "http://localhost:4000/watch/" + this.videoId;
+    },
     outputs: function () {
       return [
         {

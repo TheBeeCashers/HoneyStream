@@ -1,9 +1,9 @@
 <template>
-  <div class="other-video" @click="loadVideo">
+  <a class="other-video" @click="loadVideo">
     <div class="video-thumbnail" :style="{ backgroundImage: 'url('+thumbnailUrl+')' }" />
     <h4>{{title}}</h4>
     <div>By Parov Stelar</div>
-  </div>
+  </a>
 </template>
 
 <script>
@@ -17,9 +17,9 @@ export default {
     thumbnailUrl: String,
   },
   methods: {
-    ...mapActions('videos', ['setCurrent']),
+    ...mapActions('videos', ['getOne', 'setCurrent']),
     loadVideo() {
-      this.setCurrent(this.id);
+      this.getOne(this.id);
     }
   },
 };
