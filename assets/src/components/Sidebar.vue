@@ -20,6 +20,7 @@
 import { MoneyButtonClient } from "@moneybutton/client";
 import Cookie from "vue-cookie";
 import Vue from "vue";
+import config from '../config';
 
 Vue.use(Cookie);
 
@@ -49,7 +50,7 @@ export default {
     linkWithMoneyButton(event) {
       this.moneyButtonClient.requestAuthorization(
         "auth.user_identity:read",
-        "http://localhost:4000/"
+        config.apiUrl
       );
     },
     async authorize() {

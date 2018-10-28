@@ -60,16 +60,13 @@
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import MoneyButton from "vue-money-button";
-// import { videoPlayer } from 'vue-video-player'
-
-// import 'video.js/dist/video-js.css'
+import config from '../config';
 
 Vue.use(MoneyButton);
 
 export default {
   components: {
     MoneyButton
-    // videoPlayer,
   },
   name: "HoneystreamVideo",
   props: {
@@ -82,18 +79,6 @@ export default {
       currentTime: 0,
       previewEnded: false,
       player2Loaded: false
-      // playerOptions: {
-      //   muted: true,
-      //   language: 'en',
-      //   playbackRates: [0.7, 1.0, 1.5, 2.0],
-      //   height: '400px',
-      //   width: '600px',
-      //   controls: !previewEnded || purchased,
-      //   sources: [{
-      //     type: 'video/webm',
-      //     src: 'http://localhost:4000/watch/' + videoId,
-      //   }],
-      // },
     };
   },
   mounted() {
@@ -117,9 +102,9 @@ export default {
 
     videoUrl: function() {
       if (this.purchased) {
-        return "http://localhost:4000/watch/" + this.videoId + "/high";
+        return config.apiUrl + "/watch/" + this.videoId + "/high";
       } else {
-        return "http://localhost:4000/watch/" + this.videoId;
+        return config.apiUrl + "/watch/" + this.videoId;
       }
     },
     outputs: function() {
@@ -167,7 +152,7 @@ export default {
       this.setPurchased(this.videoId);
       setTimeout(() => {
         this.$refs.player2.src =
-          "http://localhost:4000/watch/" + this.videoId + "/high";
+          config.apiUrl + "/watch/" + this.videoId + "/high";
         this.$refs.player2.load();
         this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
       });
@@ -175,10 +160,9 @@ export default {
     hidePaywall(e) {
       e.preventDefault();
       this.setPurchased(this.videoId);
-      // this.playerOptions.sources[0].src = 'http://localhost:4000/watch/' + this.videoId + '/high';
       setTimeout(() => {
         this.$refs.player2.src =
-          "http://localhost:4000/watch/" + this.videoId + "/high";
+          config.apiUrl + "/watch/" + this.videoId + "/high";
         this.$refs.player2.load();
         this.$refs.player2.addEventListener("canplay", this.handleVideo2Loaded);
       });
