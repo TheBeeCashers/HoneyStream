@@ -1,7 +1,9 @@
 <template>
   <div id="home">
     <Header />
+
     <Video :videoId="video_id" />
+    
     <Footer />
   </div>
 </template>

@@ -40,7 +40,7 @@ export default {
           'Authorization': 'Bearer ' + token,
         }
       })
-      if (res.status === 200) {
+      if (res.status >= 200 || res.status < 300) {
         if (!hsUser) {
           const user = await res.json();
           const id = user.data.attributes.id;

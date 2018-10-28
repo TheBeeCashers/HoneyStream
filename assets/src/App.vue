@@ -30,6 +30,10 @@ body {
   letter-spacing: .01em;
 }
 
+main {
+  height: 100vh;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -38,7 +42,7 @@ body {
 
   display: flex;
   flex-direction: row;
-  height: 100%;
+  min-height: 100%;
 
   h1 {
     font-size: 2em;
