@@ -98,6 +98,7 @@ export default {
       flex: 1;
       background: #f8f8f8;
       padding: 20px;
+      position: relative;
 
       h3 {
         margin-top: 0;

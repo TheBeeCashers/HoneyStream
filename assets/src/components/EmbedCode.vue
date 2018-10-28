@@ -2,7 +2,7 @@
 <template>
   <div>
     <!-- Trigger/Open The Modal -->
-    <button ref="embedButton" @click="buttonClick">Get embed code</button>
+    <button ref="embedButton" @click="buttonClick" class="embed-button">Get Embed Code</button>
 
     <!-- The Modal -->
     <div class="modal" ref="embedModal" :style="{display: modalVisible ? 'block' : 'none'}">
@@ -62,6 +62,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.embed-button {
+  border-radius: 4px;
+  border: solid 1px #177E89;
+  background-color: #177E89;
+  padding: 10px 15px;
+  transition: background .2s;
+  width: auto;
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  &:hover {
+    background-color: #269aa7;
+    border-color: #269aa7;
+    cursor: pointer;
+  }
+}
 
 .modal {
   display: none; /* Hidden by default */
