@@ -93,13 +93,13 @@ export default {
 
   .icons {
     a {
-      color: #efa348;
+      color: #DB3069;
       text-decoration: none;
       font-weight: bold;
       transition: .2s;
 
       &:hover {
-        color: #efca60;
+        color: #f3729d;
       }
     }
 

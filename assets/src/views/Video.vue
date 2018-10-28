@@ -73,12 +73,12 @@ export default {
 
 <style>
 .video-description a {
-  color: #eaad4d !important;
-  text-decoration: none !important;
+  color: #DB3069;
+  text-decoration: none;
   transition: color .2s;
 }
 .video-description a:hover {
-  color: #efca60 !important;
+  color: #f3729d;
 }
 </style>
 

@@ -139,15 +139,15 @@ export default {
 
       .upload-button, .cancel-button {
         border-radius: 4px;
-        border: solid 1px #e67e22;
-        background-color: #e67e22;
+        border: solid 1px #DB3069;
+        background-color: #DB3069;
         padding: 10px 20px;
         transition: background .2s;
         width: auto;
 
         &:hover {
-          background-color: #d35400;
-          border-color: #d35400;
+          background-color: #f3729d;
+          border-color: #f3729d;
           cursor: pointer;
         }
       }
