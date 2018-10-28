@@ -2,6 +2,12 @@ defmodule Honeystream.Videos.Video do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @paywall_preview "preview"
+  @paywall_quality "quality"
+
+  defmacro paywall_preview, do: @paywall_preview
+  defmacro paywall_quality, do: @paywall_quality
+
   schema "videos" do
     field :content_type, :string
     field :filename_high, :string
@@ -12,6 +18,7 @@ defmodule Honeystream.Videos.Video do
     field :description, :string
     field :thumbnail_id, :string
     field :creator_address, :string
+    field :paywall_type, :string
     field :video_file, :any, virtual: true
     has_many :payments, Honeystream.Videos.Payment
 
@@ -31,6 +38,7 @@ defmodule Honeystream.Videos.Video do
       :description,
       :thumbnail_id,
       :creator_address,
+      :paywall_type,
     ])
     |> validate_required([:title, :video_file])
   end

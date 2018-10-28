@@ -9,6 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+require Honeystream.Videos.Video
+
 Honeystream.Repo.insert!(%Honeystream.Videos.Video{
   title: "Parov Stelar - Live at Sziget 2018 (Full Show)",
   description: "Marcus Füreder better known by his stage name Parov Stelar, is an Austrian musician, composer, producer and DJ. His musical style is based on a combination of jazz, house, electro and pop. He is known as one of the pioneers of electro swing.",
@@ -19,6 +22,7 @@ Honeystream.Repo.insert!(%Honeystream.Videos.Video{
   path_low: "7d3670ec-2ece-4e29-853b-27e73ffc0364.webm",
   thumbnail_id: "5203ace1-3d1d-4901-ab1c-e0852f30de64",
   creator_address: "bitcoincash:qp8w68rkl9cj6tpzhwljk58mruy2lwu3lqas5zuu9m",
+  paywall_type: Honeystream.Videos.Video.paywall_preview,
 })
 Honeystream.Repo.insert!(%Honeystream.Videos.Video{
   title: "Parov Stelar - Step Two ft. Lilja Bloom (Official Video)",
@@ -36,6 +40,7 @@ Honeystream.Repo.insert!(%Honeystream.Videos.Video{
   path_low: "3a9a83f3-1a04-4528-9e15-d62ab28f220c.webm",
   thumbnail_id: "fe78510d-d2c4-41b9-a7cb-735fb487e7ba",
   creator_address: "bitcoincash:qp8w68rkl9cj6tpzhwljk58mruy2lwu3lqas5zuu9m",
+  paywall_type: Honeystream.Videos.Video.paywall_quality,
 })
 Honeystream.Repo.insert!(%Honeystream.Videos.Video{
   title: "Parov Stelar - Mambo Rap (Official Video)",
@@ -53,4 +58,5 @@ Honeystream.Repo.insert!(%Honeystream.Videos.Video{
   path_low: "04072882-9bdf-4de8-bd3f-2ee547474618.webm",
   thumbnail_id: "d89a2cb9-b032-4614-ac7f-a7490e119836",
   creator_address: "bitcoincash:qp8w68rkl9cj6tpzhwljk58mruy2lwu3lqas5zuu9m",
+  paywall_type: Honeystream.Videos.Video.paywall_quality,
 })

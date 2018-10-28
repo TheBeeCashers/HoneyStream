@@ -6,25 +6,20 @@
 </template>
 
 <script>
+import { MoneyButtonClient } from "@moneybutton/client";
+
 export default {
-  components: {
-  },
-  name: 'user',
-  props: {
-  },
+  components: {},
+  name: "user",
+  props: {},
   data() {
     return {
-      uuid: localStorage.getItem('hs-uuid') || 'anon'
+      uuid: localStorage.getItem("hs-uuid") || "anon"
     };
   },
-  mounted() {
-  },
-  computed: {
-    
-  },
-  methods: {
-    
-  },
+  mounted() {},
+  computed: {},
+  methods: {}
 };
 </script>
 

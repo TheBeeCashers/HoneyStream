@@ -21,11 +21,11 @@
   .search-box {
     flex: 1;
     text-align: center;
-    
+
     .search-field {
       padding: 10px;
       width: 200px;
-      transition: width .2s;
+      transition: width 0.2s;
       outline: none;
       border-radius: 4px;
       border: solid 1px #ececec;
@@ -50,5 +50,4 @@
     }
   }
 }
-
 </style>

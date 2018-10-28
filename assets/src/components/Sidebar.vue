@@ -11,9 +11,56 @@
       <li><router-link to="/library">Your Videos</router-link></li>
       <li><router-link to="/purchases">Your Purchases</router-link></li>
       <li><router-link to="/user">Settings</router-link></li>
+      <li v-if="!isLoggedIn"><a @click="linkWithMoneyButton">Log in with Money Button</a></li>
     </ul>
   </div>
 </template>
+
+<script>
+import { MoneyButtonClient } from "@moneybutton/client";
+import Cookie from "vue-cookie";
+import Vue from "vue";
+
+Vue.use(Cookie);
+
+export default {
+  components: {},
+  name: "user",
+  props: {},
+  data() {},
+  mounted() {
+    this.moneyButtonClient = new MoneyButtonClient(
+      "66095b051e6b3363242ee35756c7e866"
+    );
+    if (
+      !this.isLoggedIn &&
+      this.$route.query.code !== undefined &&
+      this.$route.query.state !== undefined
+    ) {
+      this.authorize();
+    }
+  },
+  computed: {
+    isLoggedIn: function() {
+      return !!this.$cookie.get("mbuid");
+    }
+  },
+  methods: {
+    linkWithMoneyButton(event) {
+      this.moneyButtonClient.requestAuthorization(
+        "auth.user_identity:read",
+        "http://localhost:4000/"
+      );
+    },
+    async authorize() {
+      await this.moneyButtonClient.handleAuthorizationResponse();
+      const { id: moneyButtonId } = await this.moneyButtonClient.getIdentity();
+      this.$cookie.set("mbuid", moneyButtonId, 1);
+    }
+  }
+};
+</script>
+
 
 <style scoped lang="scss">
 #sidebar {
@@ -50,7 +97,7 @@
         text-decoration: none;
         font-weight: bold;
         border-left: solid 4px #f8f8f8;
-        transition: border-color .2s;
+        transition: border-color 0.2s;
 
         &:hover {
           border-left: solid 4px #efca60;
